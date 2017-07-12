@@ -1,0 +1,240 @@
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.sgek-app {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.sgek-app.identificacao {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  background: url('../../assets/images/background.gif');
+  background-repeat: repeat;
+  background-position: left top;
+}
+
+.sgek-app.app {
+  /*display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;*/
+  overflow: hidden;
+}
+
+/* --------------------------------------------*/
+/* ----------->>> IDENTIFICACAO <<<------------*/
+/* --------------------------------------------*/
+.sgek-identificacao-base {
+  -webkit-box-shadow: 0px 8px 10px rgba(0, 0, 0, .25);
+  -moz-box-shadow: 0px 8px 10px rgba(0, 0, 0, .25);
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, .25);
+  margin-bottom: 5em;
+}
+
+.sgek-identificacao-base .sgek-logo {
+  width: 25em;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.sgek-faixa {
+  overflow: hidden;
+  padding: 1.5em 0;
+  background-color: white;
+}
+
+.sgek-identificacao-form-base {
+  width: 25em;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------*/
+/* ---------------->>> APP <<<-----------------*/
+/* --------------------------------------------*/
+.sgek-app-coluna-esquerda {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 85px;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 300px;
+  /*height: calc(100% - 85px);*/
+  background: url('../../assets/images/background.gif');
+  background-repeat: repeat;
+  background-position: left top;
+}
+
+.sgek-app-coluna-esquerda .sgek-logo {
+  display: none;
+  margin: 2em;
+  padding: 0 0 2em 0;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.sgek-app-coluna-esquerda .sgek-logo img {
+  width: 125px;
+  height: auto;
+}
+
+.sgek-app-coluna-esquerda .sgek-usuario {
+  padding: 0 2em;
+  margin: 2em 0;
+  text-align: center;
+}
+
+.sgek-app-coluna-esquerda .sgek-usuario img {
+  margin-bottom: 1em;
+}
+
+.sgek-app-coluna-esquerda .sgek-usuario p {
+  color: white;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu {
+  margin: 0;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li {
+  list-style: none;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li a,
+.sgek-app-coluna-esquerda .sgek-menu ul li a:visited {
+  position: relative;
+  display: block;
+  padding: .75em;
+  border-top: 1px solid white;
+  border-left: 10px solid #285e8d;
+  color: white;
+  background-color: #444;
+  text-decoration: none;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li a.ativo {
+  background-color: #333;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li a.ativo::after {
+  content: "\e080";
+  position: absolute;
+  top: calc(50% - 8px);
+  right: 10px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li:last-child a {
+  border-bottom: 1px solid white;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li a:hover {
+  background-color: #333;
+}
+
+.sgek-app-coluna-esquerda .sgek-menu ul li a span {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.sgek-app-coluna-direita {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sgek-app-coluna-direita.menu-aberto {
+  margin-left: 300px;
+}
+
+.sgek-app-mobile-cabecalho {
+  display: block;
+  margin-bottom: 1px;
+  background: url('../../assets/images/background.gif');
+  background-repeat: repeat;
+  background-position: left top;
+}
+
+.sgek-app-mobile-cabecalho a {
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: #285e8d;
+  padding: .25em;
+  color: white;
+  font-size: 4em;
+}
+
+.sgek-app-mobile-cabecalho .sgek-logo {
+  float: right;
+  padding: .63em;
+}
+
+.sgek-app-mobile-cabecalho .sgek-logo img {
+  width: 125px;
+  height: auto;
+}
+
+.sgek-evento-selecionado-base {
+  padding: .5em 1em;
+  background-color: #8db6da;
+}
+
+.sgek-conteudo,
+.sgek-form {
+  padding: 1em;
+}
+
+.sgek-header {
+  padding: .3em 1em 1em 1em;
+  border-bottom: 1px solid #8db6da;
+}
+
+/* --------------------------------------------*/
+/* --------->>> BREAKPOINT 768px <<<-----------*/
+/* --------------------------------------------*/
+@media all and (min-width: 48em) {
+  .sgek-app-mobile-cabecalho {
+    display: none;
+  }
+
+  .sgek-app-coluna-esquerda {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    width: 300px;
+    height: 100%;
+  }
+
+  .sgek-app-coluna-esquerda .sgek-logo {
+    display: block;
+  }
+
+  .sgek-app-coluna-direita {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+  }
+
+  .sgek-botao-base {
+    padding-left: 17%;
+  }
+}

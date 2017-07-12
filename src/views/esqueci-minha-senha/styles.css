@@ -1,0 +1,28 @@
+.sgek-login-form-base form {
+  margin: 0;
+}
+
+.sgek-btn-block {
+  display: block;
+  width: 100%;
+}
+
+.sgek-link-voltar {
+  display: block;
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+/* --------------------------------------------*/
+/* --------->>> BREAKPOINT 448px <<<-----------*/
+/* --------------------------------------------*/
+@media all and (min-width: 28em) {
+  .sgek-btn-block {
+    width: auto;
+    float: right;
+  }
+
+  .sgek-link-voltar {
+    text-align: left;
+  }
+}

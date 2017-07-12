@@ -1,0 +1,25 @@
+<div class="sgek-app-mobile-cabecalho">
+  <a href="javascript: void(0);"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+  <div class="sgek-logo"><img src="{{imagemLogo}}" alt="ARS Eventos"></div>
+</div>
+<div class="sgek-app-coluna-esquerda">
+  <div class="sgek-logo"><img src="{{imagemLogo}}" alt="ARS Eventos"></div>
+  <div class="sgek-usuario">
+    <img src="{{imagemUsuario}}" alt="Usuário">
+    <p>Olá <b>{{nomeUsuario}}</b>, seja bem-vindo!</p>
+  </div>
+  <nav class="sgek-menu">
+    <ul>
+      <li><a id="apresentacao" href="#/apresentacao" title="Início" class="ativo"><span class="glyphicon glyphicon-home"></span>Início</a></li>
+      <li><a id="eventos" href="#/eventos" title="Eventos"><span class="glyphicon glyphicon-calendar"></span>Eventos</a></li>
+      <li><a id="importar" href="#/importar" title="Importar"><span class="glyphicon glyphicon-floppy-open"></span>Importar</a></li>
+      <li><a id="sairA" href="javascript: void(0);" title="Sair"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="sgek-app-coluna-direita">
+  <div class="sgek-evento-selecionado-base">
+    <strong>Evento selecionado:</strong> {{eventoSelecionado}}
+  </div>
+  <div id="conteudoPaginaDiv"></div>
+</div>

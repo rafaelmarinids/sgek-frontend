@@ -1,0 +1,21 @@
+.sgek-nav {
+  margin-bottom: 1em;
+}
+
+.sgek-table thead tr th,
+.sgek-table tbody tr td {
+  vertical-align: middle;
+}
+
+.sgek-table tbody tr td:last-child {
+  min-width: 9em;
+}
+
+/* --------------------------------------------*/
+/* --------->>> BREAKPOINT 1200px <<<-----------*/
+/* --------------------------------------------*/
+@media all and (min-width: 75em) {
+  .sgek-table tbody tr td:last-child {
+    width: 19em;
+  }
+}

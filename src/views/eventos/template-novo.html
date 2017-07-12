@@ -1,0 +1,71 @@
+<div class="sgek-header"><h1>Novo Evento</h1></div>
+
+<div class="sgek-conteudo">
+  <form class="form-horizontal sgek-form">
+    <div class="form-group">
+      <label for="confirmacaoInscricaoCheckbox" class="col-sm-2 control-label">Ativo?</label>
+      <div class="col-sm-5">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default active">
+            <input type="radio" name="ativo" id="sim" autocomplete="off" checked> Sim
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="ativo" id="não" autocomplete="off"> Não
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tituloInput" class="col-sm-2 control-label">Título</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="tituloInput" placeholder="Título do evento" max="250">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="corInput" class="col-sm-2 control-label">Cor</label>
+      <div class="col-sm-1">
+        <input type="color" class="form-control" id="corInput">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="logomarcaInput" class="col-sm-2 control-label">Logomarca</label>
+      <div class="col-sm-5">
+        <input type="file" class="form-control-static" id="logomarcaInput">
+        <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 150x80 pixels.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmacaoInscricaoCheckbox" class="col-sm-2 control-label">Confirmação de inscrição?</label>
+      <div class="col-sm-5">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default">
+            <input type="radio" name="confirmacao" id="sim" autocomplete="off" checked> Sim
+          </label>
+          <label class="btn btn-default active">
+            <input type="radio" name="confirmacao" id="não" autocomplete="off" disabled="disabled"> Não
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="planodefundoInput" class="col-sm-2 control-label">Plano de fundo</label>
+      <div class="col-sm-5">
+        <input type="file" class="form-control-static" id="planodefundoInput" disabled="disabled">
+        <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 1024x768 pixels.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-body sgek-botao-base">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Cadastrar</button>
+        <a class="btn btn-default" href="#/eventos" role="button"><span class="glyphicon glyphicon-remove"></span>Cancelar</a>
+      </div>
+    </div>
+
+  </form>
+</div>

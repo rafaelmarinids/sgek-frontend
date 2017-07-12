@@ -1,0 +1,24 @@
+<div class="modal-dialog {{tamanho}}" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      {{#if fechar}}
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      {{/if}}
+      <h4 class="modal-title">{{titulo}}</h4>
+    </div>
+    <div class="modal-body">
+      {{{corpo}}}
+    </div>
+    {{#if botoes}}
+      <div class="modal-footer">
+        {{#if botoes.length}}
+          {{#each botoes}}
+            <button type="button" class="btn btn-{{#if layout}}{{layout}}{{else}}default{{/if}}" {{#if fechar}}data-dismiss="modal"{{/if}} {{#if id}}id="{{id}}"{{/if}}>{{#if icone}}<span class="glyphicon glyphicon-{{icone}}"></span> {{/if}}{{texto}}</button>
+          {{/each}}
+        {{else}}
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

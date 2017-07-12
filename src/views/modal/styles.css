@@ -1,0 +1,10 @@
+.modal-body .alert,
+.modal-body .progress {
+  margin-bottom: 0 !important;
+}
+
+/* --------------------------------------------*/
+/* --------->>> BREAKPOINT 448px <<<-----------*/
+/* --------------------------------------------*/
+@media all and (min-width: 28em) {
+}
