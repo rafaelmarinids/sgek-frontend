@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({ // Gera o arquivo HTML de saída
       title: 'SGEK',
-      favicon: './src/assets/images/favicon.ico',
+      //favicon: './src/assets/images/favicon.ico',
       template: './src/assets/templates/index.hbs'
     }),
     new webpack.HotModuleReplacementPlugin(), // Enable HMR

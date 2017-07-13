@@ -29,6 +29,6 @@
   },
   "scripts": {
     "build": "webpack --progress --watch",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --open"
   }
 }
