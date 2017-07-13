@@ -158,7 +158,7 @@ html, body {
 }
 
 .sgek-app-coluna-direita.menu-aberto {
-  margin-left: 300px;
+  margin-left: 301px;
 }
 
 .sgek-app-mobile-cabecalho {
@@ -224,8 +224,8 @@ html, body {
   }
 
   .sgek-app-coluna-direita {
-    width: calc(100% - 300px);
-    margin-left: 300px;
+    width: calc(100% - 299px);
+    margin-left: 301px;
   }
 
   .sgek-botao-base {
