@@ -1,9 +1,10 @@
-var Modal = require("./views/modal/modal.view.js");
+var ModalView = require("./views/modal/modal.view.js");
+var ModalCarregandoView = require("./views/modal-carregando/modal-carregando.view.js");
 
 module.exports = {
   // Constantes
   contextoSistema: "http://sgek",
-  xdebug: "?XDEBUG_SESSION_START=atom-xdebug",/*
+  //xdebug: "?XDEBUG_SESSION_START=atom-xdebug",/*
   xdebug: "",/**/
 
   // Funções
@@ -23,27 +24,22 @@ module.exports = {
   	}
   },
   mostrarCarregando: function() {
-    if (!this.modalCarregando || (this.modalCarregando && !this.modalCarregando.isAberto())) {
-      this.modalCarregando = new Modal({
-        titulo: "Carregando, aguarde...",
-        corpo: '<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>',
-        tamanho: "modal-sm",
-        botoes: false
-      });
+    if (!this.modalCarregandoView || (this.modalCarregandoView && !this.modalCarregandoView.isAberto())) {
+      this.modalCarregandoView = new ModalCarregandoView();
 
-      this.modalCarregando.render();
+      this.modalCarregandoView.render();
     }
   },
   esconderCarregando: function() {
-    if (this.modalCarregando) {
-      this.modalCarregando.fechar();
+    if (this.modalCarregandoView) {
+      this.modalCarregandoView.fechar();
 
-      this.modalCarregando = null;
+      this.modalCarregandoView = null;
     }
   },
   mostrarPopup: function(opcoes) {
-    var modal = new Modal(opcoes);
+    var modalView = new ModalView(opcoes);
 
-    modal.render();
+    modalView.render();
   }
 }

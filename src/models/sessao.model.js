@@ -3,7 +3,7 @@ require("jstorage");
 var Commons = require("../commons.js");
 
 module.exports = Backbone.Model.extend({
-	urlRoot: Commons.contextoSistema + "/rs/autenticacao" + Commons.xdebug,
+	urlRoot: Commons.contextoSistema + "/rs/autenticacao",
 	autenticar: function(email, senha, callback) {
 		this.fetch({
   			type: "POST",
@@ -23,7 +23,7 @@ module.exports = Backbone.Model.extend({
 
 		$.ajax({
 			method: "GET",
-			url: Commons.contextoSistema + "/rs/renovar-autenticacao" + Commons.xdebug,
+			url: Commons.contextoSistema + "/rs/renovar-autenticacao",
 			beforeSend: function(request) {
 				request.setRequestHeader("Authorization", "Bearer " + sessaoModel.get("token"));
 			},

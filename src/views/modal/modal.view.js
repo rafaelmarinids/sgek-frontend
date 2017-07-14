@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
   events: {
     "click button": "_onClickButton"
   },
-  render: function(autenticado) {
+  render: function() {
     var opcoes = _.extend({
       titulo: "",
       corpo: "",
@@ -37,7 +37,9 @@ module.exports = Backbone.View.extend({
 
     $("body").append(this.el);
 
-    this.$el.modal().modal("show");
+    this.$el.modal({
+      backdrop: !opcoes.fechar ? "static" : true
+    }).modal("show");
 
     this.aberto = true;
 
