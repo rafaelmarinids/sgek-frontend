@@ -33,7 +33,7 @@ module.exports = Backbone.View.extend({
       }]
     }, this.options);
 
-    this.$el.append(template(opcoes));
+    this.$el.html(template(opcoes));
 
     $("body").append(this.el);
 

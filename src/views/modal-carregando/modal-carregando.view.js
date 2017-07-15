@@ -35,13 +35,13 @@ module.exports = Backbone.View.extend({
   },
   setMensagem: function(mensagem) {
     if (mensagem) {
-      this.$("p").text(mensagem);
+      $("#mensagemP").html(mensagem);
     }
   },
   setPorcentagem: function(porcentagem) {
     if (_.isNumber(porcentagem) && porcentagem >= 0 && porcentagem <= 100) {
-      this.$(".progress-bar").css("width", porcentagem);
-      this.$(".progress-bar").attr("aria-valuenow", porcentagem);
+      $(".progress-bar").css("width", porcentagem + "%");
+      $(".progress-bar").attr("aria-valuenow", porcentagem);
     }
   }
 });

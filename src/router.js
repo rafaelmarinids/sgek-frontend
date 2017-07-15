@@ -6,6 +6,7 @@ var EsqueciMinhaSenhaView = require("./views/esqueci-minha-senha/esqueci-minha-s
 var ApresentacaoView = require("./views/apresentacao/apresentacao.view.js");
 var EventosView = require("./views/eventos/eventos.view.js");
 var EventosNovoView = require("./views/eventos/novo.view.js");
+var EventosEditarView = require("./views/eventos/editar.view.js");
 
 var sessaoModel = new SessaoModel();
 
@@ -17,7 +18,7 @@ module.exports = Backbone.Router.extend({
     	labelFormatter: "label"
     });*/
   },
-  requerAutenticacao: ["apresentacao", "eventos", "eventos-novo", "importar"],
+  requerAutenticacao: ["apresentacao", "eventos", "importar"],
   previneAcessoQuandoAutenticado: ["identificacao", "esqueci-minha-senha"],
   execute: function(callback, args, name) {
   	/*
@@ -33,7 +34,7 @@ module.exports = Backbone.Router.extend({
   	 */
   	this.historico = this.historico || [];
 
-  	this.historico[this.historico.length] = this._construirUrl(name, arguments);
+  	this.historico[this.historico.length] = this._construirUrl(name, args);
 
   	/*
   	 * Define a rota anterior na sessão.
@@ -45,7 +46,7 @@ module.exports = Backbone.Router.extend({
   	 * Define a rota atual na sessão.
   	 */
   	sessaoModel.set("rotaAtual",
-  			this._construirUrl(name, arguments));
+  			this._construirUrl(name, args));
 
   	/*
   	 * Realiza a renovação da autenticação caso token não esteja vazio.
@@ -53,7 +54,7 @@ module.exports = Backbone.Router.extend({
   	if (sessaoModel.get("token")) {
       Commons.mostrarCarregando();
 
-  		sessaoModel.renovarAutenticacao(_.bind(this._execute, this, callback, arguments, name));
+  		sessaoModel.renovarAutenticacao(_.bind(this._execute, this, callback, args, name));
   	} else {
   		this._execute(callback, args, name);
   	}
@@ -64,10 +65,10 @@ module.exports = Backbone.Router.extend({
   	 */
   	var isAutenticado = sessaoModel.get("autenticado");
   	var necessitaAutenticacao = _.contains(this.requerAutenticacao, name);
-  	var cancelaAcesso = _.contains(this.previneAcessoQuandoAutenticado, name);
+		var cancelaAcesso = _.contains(this.previneAcessoQuandoAutenticado, name);
 
   	if (necessitaAutenticacao && !isAutenticado) {
-  		sessaoModel.set("redirecionamento", this._construirUrl(name, arguments));
+  		sessaoModel.set("redirecionamento", this._construirUrl(name, args));
 
   		this.navigate("#/identificacao", {trigger: true});
 
@@ -86,7 +87,7 @@ module.exports = Backbone.Router.extend({
     this.appView.render(isAutenticado);
 
   	if (callback) {
-  		callback.apply(this, arguments);
+  		callback.apply(this, args);
   	}
   },
   _construirUrl: function(name, args) {
@@ -107,8 +108,7 @@ module.exports = Backbone.Router.extend({
 		"identificacao": "identificacao",
     "esqueci-minha-senha": "esqueci-minha-senha",
     "apresentacao": "apresentacao",
-    "eventos": "eventos",
-    "eventos/novo": "eventos-novo",
+    "eventos(/:acao)(/:id)": "eventos",
 		"*path": "pagina-nao-encontrada"
 	},
 	"identificacao": function() {
@@ -124,10 +124,20 @@ module.exports = Backbone.Router.extend({
   "apresentacao": function() {
     this.view = new ApresentacaoView();
   },
-  "eventos": function() {
-    this.view = new EventosView();
-  },
-  "eventos-novo": function() {
-    this.view = new EventosNovoView();
+  "eventos": function(acao, id) {
+		switch (acao) {
+			case "novo":
+				this.view = new EventosNovoView();
+
+				break;
+			case "editar":
+				this.view = new EventosEditarView({id: id});
+
+				break;
+			default:
+				this.view = new EventosView();
+
+				break;
+		}
   }
 });

@@ -1,17 +1,17 @@
-<div class="sgek-header"><h1>Novo Evento</h1></div>
+<div class="sgek-header"><h1>{{acao}} Evento</h1></div>
 
 <div class="sgek-conteudo">
+  <ul class="nav nav-tabs sgek-nav">
+    <li role="presentation"><a href="#/eventos"><span class="glyphicon glyphicon-th-large"></span> Eventos</a></li>
+    <li role="presentation" class="active"><a href="javascript: void(0);"><span class="glyphicon glyphicon-{{icon}}"></span> {{acao}} evento</a></li>
+  </ul>
+
   <form class="form-horizontal sgek-form">
     <div class="form-group">
       <label for="ativoRadio" class="col-sm-2 control-label">Ativo?</label>
       <div class="col-sm-5">
         <div id="ativoRadio" class="btn-group" data-toggle="buttons">
-          <label class="btn btn-default active">
-            <input type="radio" name="ativo" value="true" autocomplete="off" checked> Sim
-          </label>
-          <label class="btn btn-default">
-            <input type="radio" name="ativo" value="false" autocomplete="off"> Não
-          </label>
+          {{{helper-status-input evento.status}}}
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="form-group">
       <label for="tituloInput" class="col-sm-2 control-label">Título</label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" id="tituloInput" name="titulo" placeholder="Título do evento" max="250">
+        <input type="text" class="form-control" id="tituloInput" name="titulo" placeholder="Título do evento" max="250" value="{{evento.titulo}}">
         <span class="help-block"></span>
       </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="form-group">
       <label for="corInput" class="col-sm-2 control-label">Cor</label>
       <div class="col-sm-1">
-        <input type="color" class="form-control" id="corInput">
+        <input type="color" class="form-control" id="corInput" value="{{evento.cor}}">
       </div>
     </div>
 
@@ -35,7 +35,7 @@
       <label for="logomarcaInput" class="col-sm-2 control-label">Logomarca</label>
       <div class="col-sm-5">
         <input type="file" class="form-control-static" name="logomarca" id="logomarcaInput">
-        <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 150x80 pixels e no máximo 1MB.</p>
+        <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 150x80 pixels e tamanho máximo de 1MB.</p>
       </div>
     </div>
 
@@ -43,12 +43,7 @@
       <label class="col-sm-2 control-label">Confirmação de inscrição?</label>
       <div class="col-sm-5">
         <div id="confirmacaoRadio" class="btn-group" data-toggle="buttons">
-          <label class="btn btn-default">
-            <input type="radio" name="confirmacao" value="true" autocomplete="off" checked> Sim
-          </label>
-          <label class="btn btn-default active">
-            <input type="radio" name="confirmacao" value="false" autocomplete="off"> Não
-          </label>
+          {{{helper-confirmacao-input evento.confirmacao}}}
         </div>
       </div>
     </div>
@@ -57,13 +52,13 @@
       <label for="planodefundoInput" class="col-sm-2 control-label">Plano de fundo</label>
       <div class="col-sm-5">
         <input type="file" class="form-control-static" name="planodefundo" id="planodefundoInput" disabled="disabled">
-        <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 1024x768 pixels e no máximo 1MB.</p>
+        <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 1024x768 pixels e tamanho máximo de 1MB.</p>
       </div>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-body sgek-botao-base">
-        <button id="cadastrarBtn" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Cadastrar</button>
+        <button id="salvarBtn" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Cadastrar</button>
         <a class="btn btn-default" href="#/eventos" role="button"><span class="glyphicon glyphicon-remove"></span>Cancelar</a>
       </div>
     </div>

@@ -25,7 +25,7 @@ module.exports = DefaultModel.extend({
 	},
 	sync: function(method, model, options) {
 		// Post data as FormData object on create to allow file upload
-		if (method == "create") {
+		if (method == "create" || method == "update") {
 			var formData = new FormData();
 			
 			// Loop over model attributes and append to formData

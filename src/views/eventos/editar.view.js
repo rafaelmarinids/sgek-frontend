@@ -9,10 +9,12 @@ var template = require("./template-evento.hbs");
 
 module.exports = Backbone.View.extend({
   el: "#conteudoPaginaDiv",
-  initialize: function() {
-    this.eventoModel = new EventoModel();
+  initialize: function(options) {
+    this.options = options;
 
-    this.listenTo(this.eventoModel, "progress", _.bind(this._mostrarCarregando, this));
+    this.eventoModel = new EventoModel({id: this.options.id});
+
+    this.listenTo(this.eventoModel, "progress", this._mostrarCarregando);
 
     Backbone.Validation.bind(this, {
       model: this.eventoModel,
@@ -20,23 +22,26 @@ module.exports = Backbone.View.extend({
       invalid: this._invalidar
     });
 
-    this.render();
+    this.eventoModel.fetch({
+      success: _.bind(this.render, this)
+    });
   },
   events: {
-    "click #salvarBtn": "cadastrar",
+    "click #salvarBtn": "editar",
     "click #confirmacaoRadio label": "habilitarDesabilitarPlanodefundo"
   },
   render: function() {
     this.$el.html(template({
-      acao: "Novo",
-      icon: "plus"
+      acao: "Editar",
+      icon: "pencil",
+      evento: this.eventoModel.toJSON()
     }));
 
     Commons.esconderCarregando();
 
     return this;
   },
-  cadastrar: function(event) {
+  editar: function(event) {
     event.preventDefault();
 
     this.eventoModel.set("status", this.$('#ativoRadio label.active input').val() == "true" ? "Dados não importados" : "Inativo");
@@ -52,11 +57,11 @@ module.exports = Backbone.View.extend({
     }
 
     if (this.eventoModel.isValid(true)) {
-      this.eventoModel.save({}, {
+      this.eventoModel.save(this.eventoModel.attributes, {
         success: _.bind(function() {
           Commons.mostrarPopup({
             titulo: "Sucesso",
-            corpo: '<div class="alert alert-success" role="alert">Evento cadastrado com sucesso!</div>',
+            corpo: '<div class="alert alert-success" role="alert">Evento editado com sucesso!</div>',
             tamanho: "modal-sm",
             botoes: [
               {
