@@ -11,6 +11,16 @@
   min-width: 9em;
 }
 
+.sgek-ampliar-imagem img {
+  max-width: 150px;
+  height: auto;
+}
+
+.sgek-imagem-ampliada {
+  max-width: 100%;
+  height: auto;
+}
+
 /* --------------------------------------------*/
 /* --------->>> BREAKPOINT 1200px <<<-----------*/
 /* --------------------------------------------*/

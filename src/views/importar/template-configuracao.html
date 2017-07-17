@@ -1,0 +1,61 @@
+<div class="sgek-header"><h1>Importar</h1></div>
+
+<div class="sgek-conteudo">
+  <p><strong>Instruções:</strong></p>
+  <ol>
+    <li>No campo "Tela de inscrição" selecione as colunas que deverão ser consideradas para a busca e confirmação de entrega de kit;</li>
+    <li>No campo "Tela de confirmação" selecione as colunas que deverão ser consideradas para a confirmação de inscrição caso esta esteja configurada;</li>
+    <li>No campo "Número de inscrição" selecione uma única coluna que representa unicamente a inscrição (importante para o registro da entrega);</li>
+    <li>Clique no botão "Importar" para concluir o processo.</li>
+  </ol>
+
+  <form class="form-horizontal sgek-form">
+    <dl class="dl-horizontal well">
+      <dt>Evento:</dt>
+      <dd>Evento da Unaerp 2017</dd>
+      <dt>Arquivo:</dt>
+      <dd>inscricoes.xlsx</dd>
+      <dt>Qtd. de registros:</dt>
+      <dd>1100</dd>
+    </dl>
+
+    <table class="table table-hover sgek-table">
+      <thead>
+        <tr>
+          <th>Coluna(s)</th>
+          <th>Tela de inscrição</th>
+          <th>Tela de confirmação</th>
+          <th>Número de inscrição</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td><strong>Inscrição</strong></td>
+            <td><input type="checkbox" name="inscricao[]" value=""></td>
+            <td><input type="checkbox" name="confirmacao[]" value=""></td>
+            <td><input type="radio" name="numeroInscricao" value=""></td>
+          </tr>
+          <tr>
+            <td><strong>Nome</strong></td>
+            <td><input type="checkbox" name="inscricao[]" value=""></td>
+            <td><input type="checkbox" name="confirmacao[]" value=""></td>
+            <td><input type="radio" name="numeroInscricao" value=""></td>
+          </tr>
+          <tr>
+            <td><strong>CPF</strong></td>
+            <td><input type="checkbox" name="inscricao[]" value=""></td>
+            <td><input type="checkbox" name="confirmacao[]" value=""></td>
+            <td><input type="radio" name="numeroInscricao" value=""></td>
+          </tr>
+      </tbody>
+    </table>
+
+    <div class="panel panel-default">
+      <div class="panel-body sgek-botao-base">
+        <button id="importarBtn" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-open"></span> Importar</button>
+        <button id="voltarBtn" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Voltar</button>
+      </div>
+    </div>
+
+  </form>
+</div>

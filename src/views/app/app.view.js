@@ -33,7 +33,7 @@ module.exports = Backbone.View.extend({
           imagemLogo: imagemLogo,
           imagemUsuario: imagemUsuario,
           nomeUsuario: sessaoModel.getNomeUsuario(),
-          eventoSelecionado: sessaoModel.get("evento") ? sessaoModel.get("evento").titulo : "nenhum evento selecionado no momento."
+          eventoSelecionado: sessaoModel.get("evento") ? sessaoModel.get("evento").titulo : "Nenhum evento selecionado no momento."
         }));
       }
 

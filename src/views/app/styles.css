@@ -224,7 +224,7 @@ html, body {
   }
 
   .sgek-app-coluna-direita {
-    width: calc(100% - 299px);
+    width: calc(100% - 301px);
     margin-left: 301px;
   }
 

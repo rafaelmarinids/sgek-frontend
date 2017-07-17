@@ -7,6 +7,7 @@ var ApresentacaoView = require("./views/apresentacao/apresentacao.view.js");
 var EventosView = require("./views/eventos/eventos.view.js");
 var EventosNovoView = require("./views/eventos/novo.view.js");
 var EventosEditarView = require("./views/eventos/editar.view.js");
+var ImportarView = require("./views/importar/importar.view.js");
 
 var sessaoModel = new SessaoModel();
 
@@ -108,7 +109,8 @@ module.exports = Backbone.Router.extend({
 		"identificacao": "identificacao",
     "esqueci-minha-senha": "esqueci-minha-senha",
     "apresentacao": "apresentacao",
-    "eventos(/:acao)(/:id)": "eventos",
+		"eventos(/:acao)(/:id)": "eventos",
+		"importar(/eventos/:id)": "importar",
 		"*path": "pagina-nao-encontrada"
 	},
 	"identificacao": function() {
@@ -139,5 +141,10 @@ module.exports = Backbone.Router.extend({
 
 				break;
 		}
-  }
+	},
+	"importar": function(id) {
+		this.view = new ImportarView({
+			id: id
+		});
+	}
 });

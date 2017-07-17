@@ -28,13 +28,15 @@ module.exports = Backbone.View.extend({
   },
   events: {
     "click #salvarBtn": "editar",
-    "click #confirmacaoRadio label": "habilitarDesabilitarPlanodefundo"
+    "click #confirmacaoRadio label": "habilitarDesabilitarPlanodefundo",
+    "click .sgek-ampliar-imagem": "ampliarImagem"
   },
   render: function() {
     this.$el.html(template({
       acao: "Editar",
       icon: "pencil",
-      evento: this.eventoModel.toJSON()
+      evento: this.eventoModel.toJSON(),
+      contexto: Commons.contextoSistema
     }));
 
     Commons.esconderCarregando();
@@ -58,11 +60,14 @@ module.exports = Backbone.View.extend({
 
     if (this.eventoModel.isValid(true)) {
       this.eventoModel.save(this.eventoModel.attributes, {
+        method: "POST",
+        url: this.eventoModel.url(),
         success: _.bind(function() {
           Commons.mostrarPopup({
             titulo: "Sucesso",
             corpo: '<div class="alert alert-success" role="alert">Evento editado com sucesso!</div>',
             tamanho: "modal-sm",
+            fechar: false,
             botoes: [
               {
                 id: "fecharBtn",
@@ -91,6 +96,14 @@ module.exports = Backbone.View.extend({
     } else {
       this.$('#planodefundoInput').attr("disabled", true);
     }
+  },
+  ampliarImagem: function(event) {
+    event.preventDefault();
+
+    Commons.mostrarPopup({
+      titulo: "Imagem",
+      corpo: '<img src="' + this.$(event.target).attr("src") + '" class="sgek-imagem-ampliada">',
+    });
   },
   _mostrarCarregando: function(porcentagem) {
     if (!this.modalCarregandoView) {

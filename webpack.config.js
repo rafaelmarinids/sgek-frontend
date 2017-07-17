@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({ // Gera o arquivo HTML de saída
-      title: 'SGEK',
+      title: 'SGEK - Sistema de Gestão de Entrega de Kits',
       //favicon: './src/assets/images/favicon.ico',
       template: './src/assets/templates/index.hbs'
     }),

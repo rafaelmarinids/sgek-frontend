@@ -1,0 +1,33 @@
+<div class="sgek-header"><h1>Importar</h1></div>
+
+<div class="sgek-conteudo">
+  <p><strong>Instrução:</strong> Para importar as inscrições de um evento, primeiramente selecione um evento na lista abaixo, em seguida selecione o arquivo excel correspondente, por fim clique em "Avançar":</p>
+
+  <form class="form-horizontal sgek-form">
+    <div class="form-group">
+      <label for="eventoSelect" class="col-sm-2 control-label">Evento</label>
+      <div class="col-sm-5">
+        <select class="form-control" name="evento" id="eventoSelect">
+          <option>Selecione...</option>
+          <option>Evento da Unaerp 2017</option>
+        </select>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="excelInput" class="col-sm-2 control-label">Arquivo de inscrições</label>
+      <div class="col-sm-5">
+        <input type="file" class="form-control-static" name="excel" id="excelInput">
+        <p class="help-block"><strong>Formatos aceitos:</strong> XLS, XLSX, ODS e CSV.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-body sgek-botao-base">
+        <button id="avancarBtn" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span> Avançar</button>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -36,6 +36,11 @@
       <div class="col-sm-5">
         <input type="file" class="form-control-static" name="logomarca" id="logomarcaInput">
         <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 150x80 pixels e tamanho máximo de 1MB.</p>
+        {{#if evento.logomarca}}
+        <a href="javascript: void(0);" class="sgek-ampliar-imagem">
+          <img src="{{contexto}}/eventos/imagens/{{evento.logomarca}}" alt="Logomarca" class="img-thumbnail">
+        </a>
+        {{/if}}
       </div>
     </div>
 
@@ -51,15 +56,20 @@
     <div class="form-group">
       <label for="planodefundoInput" class="col-sm-2 control-label">Plano de fundo</label>
       <div class="col-sm-5">
-        <input type="file" class="form-control-static" name="planodefundo" id="planodefundoInput" disabled="disabled">
+        <input type="file" class="form-control-static" name="planodefundo" id="planodefundoInput" {{#unless evento.confirmacao}}disabled="disabled"{{/unless}}>
         <p class="help-block"><strong>Formatos aceitos:</strong> GIF, JPG, PNG nas dimensões 1024x768 pixels e tamanho máximo de 1MB.</p>
+        {{#if evento.planodefundo}}
+        <a href="javascript: void(0);" class="sgek-ampliar-imagem">
+          <img src="{{contexto}}/eventos/imagens/{{evento.planodefundo}}" alt="Plano de fundo" class="img-thumbnail">
+        </a>
+        {{/if}}
       </div>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-body sgek-botao-base">
         <button id="salvarBtn" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Cadastrar</button>
-        <a class="btn btn-default" href="#/eventos" role="button"><span class="glyphicon glyphicon-remove"></span>Cancelar</a>
+        <a class="btn btn-default" href="#/eventos" role="button"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
       </div>
     </div>
 

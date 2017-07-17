@@ -62,6 +62,15 @@ module.exports = Backbone.View.extend({
     this.aberto = false;
   },
   _onClickButton: function(event) {
+    /*
+     * Evita que evento se realize para os elementos DOM filhos da tag "a".
+     */
+    if (event.target !== event.currentTarget) {
+      this.$(event.target).parent().click();
+
+      return;
+    }
+    
     var id = this.$(event.target).attr("id");
 
     _.each(this.options.botoes, function(botao) {
