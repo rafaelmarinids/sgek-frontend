@@ -12,11 +12,11 @@
   <form class="form-horizontal sgek-form">
     <dl class="dl-horizontal well">
       <dt>Evento:</dt>
-      <dd>Evento da Unaerp 2017</dd>
+      <dd>{{importacao.evento.titulo}}</dd>
       <dt>Arquivo:</dt>
-      <dd>inscricoes.xlsx</dd>
+      <dd>{{importacao.nomeDoArquivo}}</dd>
       <dt>Qtd. de registros:</dt>
-      <dd>1100</dd>
+      <dd>{{importacao.quantidadeDeRegistros}}</dd>
     </dl>
 
     <table class="table table-hover sgek-table">
@@ -24,35 +24,18 @@
         <tr>
           <th>Coluna(s)</th>
           <th>Tela de inscrição</th>
+          {{#if importacao.evento.confirmacao}}
           <th>Tela de confirmação</th>
+          {{/if}}
           <th>Número de inscrição</th>
         </tr>
       </thead>
-      <tbody>
-          <tr>
-            <td><strong>Inscrição</strong></td>
-            <td><input type="checkbox" name="inscricao[]" value=""></td>
-            <td><input type="checkbox" name="confirmacao[]" value=""></td>
-            <td><input type="radio" name="numeroInscricao" value=""></td>
-          </tr>
-          <tr>
-            <td><strong>Nome</strong></td>
-            <td><input type="checkbox" name="inscricao[]" value=""></td>
-            <td><input type="checkbox" name="confirmacao[]" value=""></td>
-            <td><input type="radio" name="numeroInscricao" value=""></td>
-          </tr>
-          <tr>
-            <td><strong>CPF</strong></td>
-            <td><input type="checkbox" name="inscricao[]" value=""></td>
-            <td><input type="checkbox" name="confirmacao[]" value=""></td>
-            <td><input type="radio" name="numeroInscricao" value=""></td>
-          </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
 
     <div class="panel panel-default">
       <div class="panel-body sgek-botao-base">
-        <button id="importarBtn" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-open"></span> Importar</button>
+        <button id="importarBtn" type="submit" class="btn btn-primary" {{{helper-disable-button importacao.quantidadeDeRegistros}}}><span class="glyphicon glyphicon-floppy-open"></span> Importar</button>
         <button id="voltarBtn" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Voltar</button>
       </div>
     </div>

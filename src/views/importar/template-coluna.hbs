@@ -1,0 +1,6 @@
+<td class="text-capitalize"><strong><em>{{coluna.valor}}<em></strong></td>
+<td><input type="checkbox" name="inscricao[]" value="{{coluna.indice}}" class="sgek-inscricao-checkbox"></td>
+{{#if confirmacao}}
+<td><input type="checkbox" name="confirmacao[]" value="{{coluna.indice}}" class="sgek-confirmacao-checkbox"></td>
+{{/if}}
+<td><input type="radio" name="numeroInscricao" value="{{coluna.indice}}"></td>
