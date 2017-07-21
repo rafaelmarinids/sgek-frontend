@@ -21,10 +21,14 @@ module.exports = DefaultModel.extend({
 		// Post data as FormData object on create to allow file upload
 		if (method == "create" || method == "update" || method == "read") {
 			var formData = new FormData();
-			
+
 			// Loop over model attributes and append to formData
 			_.each(model.attributes, function(value, key) {
-				formData.append(key, value);
+				if (!(value instanceof File)) {
+					formData.append(key, JSON.stringify(value));
+				} else {
+					formData.append(key, value);
+				}
 			});
 			
 			// Set processData and contentType to false so data is sent as FormData

@@ -50,7 +50,10 @@ module.exports = Backbone.View.extend({
     this.eventoModel.set("titulo", this.$("#tituloInput").val());
     this.eventoModel.set("cor", this.$("#corInput").val());
     this.eventoModel.set("logomarca", this.$('#logomarcaInput')[0].files.length > 0 ? this.$('#logomarcaInput')[0].files[0] : null);
-    this.eventoModel.set("confirmacao", this.$('#confirmacaoRadio label.active input').val() == "true");
+
+    if (!this.eventoModel.get("importacaoRealizada")) {
+      this.eventoModel.set("confirmacao", this.$('#confirmacaoRadio label.active input').val() == "true");
+    }    
 
     if (this.eventoModel.get("confirmacao")) {
       this.eventoModel.set("planodefundo", this.$('#planodefundoInput')[0].files.length > 0 ? this.$('#planodefundoInput')[0].files[0] : null);

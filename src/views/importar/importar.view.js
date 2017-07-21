@@ -81,6 +81,8 @@ module.exports = Backbone.View.extend({
     this.importacaoModel.set("evento", eventoSelecionado);
     this.importacaoModel.set("excel", this.$('#excelInput')[0].files.length > 0 ? this.$('#excelInput')[0].files[0] : null);
 
+    this.excelFile = this.importacaoModel.get("excel");
+
     if (this.importacaoModel.isValid(true)) {
       this.importacaoModel.set("evento", this.importacaoModel.get("evento").id);
 
@@ -104,6 +106,8 @@ module.exports = Backbone.View.extend({
 
     this.importacaoModel = new ImportacaoModel();
 
+    this.excelFile = null;
+
     Commons.mostrarCarregando();
 
     this.render();
@@ -111,7 +115,43 @@ module.exports = Backbone.View.extend({
   importar: function(event) {
     event.preventDefault();
 
-    
+    if (this._validarImportacao()) {
+      var evento = this.importacaoModel.get("evento");
+
+      this.importacaoModel.set("evento", this.importacaoModel.get("evento").id);
+      this.importacaoModel.set("excel", this.excelFile);
+
+      this.importacaoModel.save(null, {
+        method: "POST",
+        success: function() {
+          debugger;
+          Commons.mostrarPopup({
+            titulo: "Sucesso",
+            corpo: '<div class="alert alert-success" role="alert">Importação realizada com sucesso!</div>',
+            tamanho: "modal-sm",
+            fechar: false,
+            botoes: [
+              {
+                id: "fecharBtn",
+                texto: "Fechar",
+                layout: "primary",
+                icone: "remove",
+                fechar: true,
+                onclick: function() {
+                  Backbone.history.navigate("#/eventos", {trigger : true});
+                }
+              }
+            ]
+          });
+        },
+        complete: _.bind(function() { 
+          debugger;
+          if (this.modalCarregandoView) {
+            this.modalCarregandoView.fechar();
+          }
+        }, this)
+      });
+    }
   },
   _renderizarTabela: function() {
     if (this.importacaoModel.get("colunas") && this.importacaoModel.get("colunas").length) {
@@ -160,5 +200,49 @@ module.exports = Backbone.View.extend({
 
     $el.parent().parent().addClass("has-error");
     $el.parent().find("span.help-block").text(error).show();
+  },
+  _validarImportacao: function() {
+    if (this.importacaoModel.get("colunas") && this.importacaoModel.get("colunas").length) {
+      var colunasTelaDeInscricao = false;
+      var colunasTelaDeConfirmacao = false;
+      var colunaInscricao = false;
+
+      for (var i = 0; i < this.importacaoModel.get("colunas").length; i++) {
+        colunasTelaDeInscricao = colunasTelaDeInscricao || this.importacaoModel.get("colunas")[i].usarnabusca;
+
+        colunasTelaDeConfirmacao = colunasTelaDeConfirmacao || this.importacaoModel.get("colunas")[i].usarnaconfirmacao;
+
+        colunaInscricao = colunaInscricao || this.importacaoModel.get("colunas")[i].inscricao;
+      }
+
+      var mensagem = '<div class="alert alert-danger" role="alert"><ul>';
+
+      if (!colunasTelaDeInscricao) {
+        mensagem += "<li>É necessário selecionar ao menos uma coluna para a tela de inscrição.</li>";
+      }
+
+      if (this.importacaoModel.get("evento").confirmacao && !colunasTelaDeConfirmacao) {
+        mensagem += "<li>É necessário selecionar ao menos uma coluna para a tela de confirmação.</li>";
+      }
+
+      if (!colunaInscricao) {
+        mensagem += "<li>É necessário selecionar uma coluna que representa unicamente a inscrição.</li>";
+      }
+
+      mensagem += "</ul></div>";
+
+      if (!colunasTelaDeInscricao 
+        || (this.importacaoModel.get("evento").confirmacao && !colunasTelaDeConfirmacao)
+        || !colunaInscricao) {
+          Commons.mostrarPopup({
+            titulo: "Erro",
+            corpo: mensagem
+          });
+
+          return false;
+      }
+
+      return true;
+    }
   }
 });

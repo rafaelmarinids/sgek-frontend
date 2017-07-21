@@ -18,6 +18,8 @@ module.exports = Backbone.View.extend({
       "mensagem": sessaoModel.getMensagem()
     }));
 
+    Commons.esconderCarregando();
+
     return this;
   },
   identificar: function(event) {

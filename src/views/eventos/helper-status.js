@@ -1,7 +1,7 @@
-module.exports = function(status) {
-  switch (status) {
+module.exports = function(evento) {
+  switch (evento.status) {
     case "Dados não importados":
-      return '<span class="text-info"><span class="glyphicon glyphicon-floppy-remove"></span> Dados não importados</span>';
+      return '<a href="#/importar/eventos/' + evento.id + '" title="Dados não importados" class="text-info"><span class="glyphicon glyphicon-floppy-remove"></span> Dados não importados</a>';
     case "Ativo":
       return '<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Ativo</span>';
     case "Inativo":

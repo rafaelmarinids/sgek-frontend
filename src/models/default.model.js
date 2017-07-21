@@ -100,6 +100,8 @@ module.exports = Backbone.Model.extend({
 				request.setRequestHeader("Authorization", "Bearer " + sessaoModel.get("token"));
 			},
 			error: function(model, response, options) {
+				debugger;
+
 				if (optionsClone && _.has(optionsClone, "error")) {
 					optionsClone.error(model, response, options);
 				} else {
