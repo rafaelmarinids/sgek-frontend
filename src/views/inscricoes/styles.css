@@ -1,0 +1,44 @@
+.sgek-header.sgek-evento-selecionado {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 1em;
+}
+
+.sgek-header.sgek-evento-selecionado h1 {
+    margin: 0;
+}
+
+.sgek-logomarca-evento,
+.sgek-separador {
+    display: none;
+}
+
+.sgek-conteudo.sgek-evento-selecionado {
+    overflow-x: auto;
+    padding-bottom: 2em;
+}
+
+.sgek-fileira-formulario-pesquisa {
+    background-color: #eee;
+}
+
+/* --------------------------------------------*/
+/* --------->>> BREAKPOINT 768px <<<-----------*/
+/* --------------------------------------------*/
+@media all and (min-width: 48em) {
+    .sgek-logomarca-evento {
+        display: inline-block;
+        margin-right: 2em;
+        max-width: 150px;
+        height: auto;
+    }
+
+    .sgek-separador {
+        display: inline-block;
+        height: 50px;
+        border-right: 1px solid #333333;
+        margin-right: 2em;
+    }
+}

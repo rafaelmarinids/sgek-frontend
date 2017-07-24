@@ -29,11 +29,16 @@ module.exports = Backbone.View.extend({
       if (!this.$(".app").length) {
         this.$el.removeClass("identificacao").addClass("app");
 
+        var agora = new Date();
+
         this.$el.html(templateApp({
           imagemLogo: imagemLogo,
           imagemUsuario: imagemUsuario,
           nomeUsuario: sessaoModel.getNomeUsuario(),
-          eventoSelecionado: sessaoModel.get("evento") ? sessaoModel.get("evento").titulo : "Nenhum evento selecionado no momento."
+          /*eventoSelecionado: sessaoModel.get("evento") 
+            ? sessaoModel.get("evento").titulo 
+            : "Hoje é " + now.getDay() + ", " + now.getDate() + " de " + now.getMonth() + " de " + now.getFullYear(),*/
+          eventoSelecionado: "Hoje é " + Commons.getDescricaoDia(agora.getDay()) + ", " + agora.getDate() + " de " + Commons.getDescricaoMes(agora.getMonth()) + " de " + agora.getFullYear()
         }));
       }
 

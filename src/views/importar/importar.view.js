@@ -124,7 +124,6 @@ module.exports = Backbone.View.extend({
       this.importacaoModel.save(null, {
         method: "POST",
         success: function() {
-          debugger;
           Commons.mostrarPopup({
             titulo: "Sucesso",
             corpo: '<div class="alert alert-success" role="alert">Importação realizada com sucesso!</div>',
@@ -145,7 +144,6 @@ module.exports = Backbone.View.extend({
           });
         },
         complete: _.bind(function() { 
-          debugger;
           if (this.modalCarregandoView) {
             this.modalCarregandoView.fechar();
           }

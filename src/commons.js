@@ -41,5 +41,51 @@ module.exports = {
     var modalView = new ModalView(opcoes);
 
     modalView.render();
+  },
+  getDescricaoMes: function(mes) {
+    switch (mes) {
+      case 1:
+        return "janeiro";
+      case 2:
+        return "fevereiro";
+      case 3:
+        return "Março";
+      case 4:
+        return "abril";
+      case 5:
+        return "maio";
+      case 6:
+        return "junho";
+      case 7:
+        return "julho";
+      case 8:
+        return "agost";
+      case 9:
+        return "setembro";
+      case 10:
+        return "outubro";
+      case 11:
+        return "novembro";
+      case 12:
+        return "dezembro";
+    }
+  },
+  getDescricaoDia: function(dia) {
+    switch (dia) {
+      case 1:
+        return "segunda";
+      case 2:
+        return "terça";
+      case 3:
+        return "quarta";
+      case 4:
+        return "quinta";
+      case 5:
+        return "sexta";
+      case 6:
+        return "sábado";
+      case 0:
+        return "domingo";
+    }
   }
 }

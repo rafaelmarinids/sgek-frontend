@@ -9,6 +9,8 @@ var EventosView = require("./views/eventos/eventos.view.js");
 var EventosNovoView = require("./views/eventos/novo.view.js");
 var EventosEditarView = require("./views/eventos/editar.view.js");
 var ImportarView = require("./views/importar/importar.view.js");
+var InscricoesView = require("./views/inscricoes/inscricoes.view.js");
+var PaginaNaoEncontradaView = require("./views/pagina-nao-encontrada/pagina.view.js");
 
 var sessaoModel = new SessaoModel();
 
@@ -20,7 +22,7 @@ module.exports = Backbone.Router.extend({
 			labelFormatter: "label"
 		});
 	},
-	requerAutenticacao: ["apresentacao", "eventos", "importar"],
+	requerAutenticacao: ["apresentacao", "eventos", "importar", "inscricoes"],
 	previneAcessoQuandoAutenticado: ["identificacao", "esqueci-minha-senha"],
 	execute: function(callback, args, name) {
 		/*
@@ -111,6 +113,7 @@ module.exports = Backbone.Router.extend({
 	"apresentacao": "apresentacao",
 	"eventos(/:acao)(/:id)": "eventos",
 	"importar(/eventos/:id)": "importar",
+	"inscricoes/eventos/:id": "inscricoes",
 	"*path": "pagina-nao-encontrada"
 	},
 		"identificacao": function() {
@@ -146,5 +149,13 @@ module.exports = Backbone.Router.extend({
 		this.view = new ImportarView({
 			id: id
 		});
-	}
+	},
+	"inscricoes": function(id) {
+		this.view = new InscricoesView({
+			id: id
+		});
+	},
+	"pagina-nao-encontrada": function() {
+		this.view = new PaginaNaoEncontradaView();
+	},
 });

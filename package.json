@@ -29,7 +29,8 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "build": "webpack --progress --watch",
+    "build": "webpack",
+    "build-dev": "webpack --progress --watch",
     "start": "webpack-dev-server --open"
   }
 }
