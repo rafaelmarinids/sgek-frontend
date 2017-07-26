@@ -5,6 +5,9 @@ require("./styles.css");
 var Commons = require("../../commons.js");
 var SessaoModel = require("../../models/sessao.model.js");
 var EventoModel = require("../../models/evento.model.js");
+var ColunaCollection = require("../../collections/coluna.collection.js");
+var InscricaoCollection = require("../../collections/inscricao.collection.js");
+var TabelaView = require("./tabela.view.js");
 var template = require("./template.hbs");
 
 var sessaoModel = new SessaoModel();
@@ -15,13 +18,22 @@ module.exports = Backbone.View.extend({
     this.options = options;
 
     if (this.options.id) {
+      this.colunaCollection = new ColunaCollection();
+      this.inscricaoCollection = new InscricaoCollection();
+
       this.eventoModel = new EventoModel({id: this.options.id});
 
       this.eventoModel.fetch({
-        success: _.bind(function() {
+        success: _.bind(function(model) {
           sessaoModel.set("evento", this.eventoModel);
           
-          this.render();
+          this.colunaCollection.fetch({
+            data: $.param({ 
+              evento: model.get("id"),
+              usarnabusca: true
+            }),
+            success: _.bind(this.render, this)
+          });
         }, this)
       });
     } else {
@@ -54,7 +66,13 @@ module.exports = Backbone.View.extend({
       contexto: Commons.contextoSistema
     }));
 
-    this.$('.dropdown-toggle').dropdown();
+    this.tabelaView = new TabelaView({
+      idEvento: this.eventoModel.get("id"),
+      colunaCollection: this.colunaCollection,
+      inscricaoCollection: this.inscricaoCollection
+    });
+
+    this.$("form").html(this.tabelaView.render().el);
 
     Commons.esconderCarregando();
 
