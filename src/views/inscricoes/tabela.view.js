@@ -8,10 +8,10 @@ module.exports = Backbone.View.extend({
   },
   template: '<thead>'
         + '<tr class="sgek-fileira-formulario-pesquisa">'
-          + '<th class="sgek-botao-pesquisar"><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Pesquisar</button></th>'
+          + '<th class="sgek-coluna-botao-pesquisar"><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Pesquisar</button></th>'
         + '</tr>'
         + '<tr class="sgek-fileira-cabecalho">'
-          + '<th class="sgek-entrega-kit">Entrega de Kit</th>'
+          + '<th class="sgek-coluna-entrega-kit">Entrega de Kit</th>'
         + '</tr>'
       + '</thead>'
       + '<tbody></tbody>',
@@ -37,7 +37,7 @@ module.exports = Backbone.View.extend({
     Commons.mostrarCarregando();
 
     var filtros = {
-      evento: this.options.idEvento
+      evento: this.options.eventoModel.get("id")
     };
 
     this.$("input[type='text']").each(function() {
@@ -49,17 +49,18 @@ module.exports = Backbone.View.extend({
     this.$(".sgek-tabela-mensagem").remove();
 
     this.options.inscricaoCollection.fetch({
+      reset: true,
       data: $.param(filtros)
     });
   },
   _renderizarCabecalhoTabela: function() {
     this.options.colunaCollection.forEach(_.bind(function(model) {
       // Renderiza o formulário de pesquisa.
-      this.$(".sgek-botao-pesquisar")
+      this.$(".sgek-coluna-botao-pesquisar")
         .before('<th><input type="text" name="' + model.get("indice") + '" class="form-control" placeholder="Pesquisar ' + model.get("valor").toLowerCase() + '"></th>');
 
       // Renderiza o cabeçalho da tabela.
-      this.$(".sgek-entrega-kit")
+      this.$(".sgek-coluna-entrega-kit")
         .before('<th>' + model.get("valor") + '</th>');
     }, this));
 

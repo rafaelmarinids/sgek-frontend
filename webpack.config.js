@@ -41,7 +41,7 @@ module.exports = {
       _: 'underscore',
       Backbone: 'backbone'
     }),
-    /*new webpack.optimize.CommonsChunkPlugin({ // Separa as bibliotecas denpendentes para um arquivo separado.
+    /*new webpack.optimize.CommonsChunkPlugin({ // Separa as bibliotecas dependentes para um arquivo separado.
       names: ['vendor', 'manifest'], // Specify the common bundle's name.
       minChunks: function (module) {
          // this assumes your vendor imports exist in the node_modules directory

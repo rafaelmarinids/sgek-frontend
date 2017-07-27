@@ -17,11 +17,16 @@
 
 .sgek-conteudo.sgek-evento-selecionado {
     overflow-x: auto;
-    padding-bottom: 2em;
+    padding-bottom: 6em;
 }
 
 .sgek-fileira-formulario-pesquisa {
     background-color: #eee;
+}
+
+.sgek-coluna-botao-pesquisar,
+.sgek-coluna-botao-entregar {
+    min-width: 12em !important;
 }
 
 /* --------------------------------------------*/

@@ -67,7 +67,7 @@ module.exports = Backbone.View.extend({
     }));
 
     this.tabelaView = new TabelaView({
-      idEvento: this.eventoModel.get("id"),
+      eventoModel: this.eventoModel,
       colunaCollection: this.colunaCollection,
       inscricaoCollection: this.inscricaoCollection
     });

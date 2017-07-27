@@ -8,9 +8,11 @@ module.exports = Backbone.View.extend({
     this.listenTo(this.model, "remove", this.remove);
   },
   events: {
-    //"click button": "pesquisar"
+    "click .sgek-botao-entregar": "entregar"
   },
   render: function() {
+    this.$el.empty();
+
     this.options.colunaCollection.forEach(_.bind(function(colunaModel) {
       var colunaFileira = _.find(this.model.get("colunasFileirasBusca"), _.bind(function(colunaFileira) {
         return colunaModel.get("indice") == colunaFileira.coluna.indice;
@@ -21,10 +23,43 @@ module.exports = Backbone.View.extend({
       }
     }, this));
 
-    this.$el.append('<td><button type="button" class="btn btn-success sgek-botao-entregue"><span class="glyphicon glyphicon-ok"></span> Entregue</button></td>');
+    if (this.model.get("retirada") && this.model.get("retirada").retirado) {
+      this.$el.append('<td><button type="button" class="btn btn-success sgek-botao-entregue"><span class="glyphicon glyphicon-ok"></span> Retirado</button></td>');
+    } else {
+      this.$el.append('<td class="sgek-coluna-botao-entregar">'
+        + '<div class="btn-group">'
+          + '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Disponível <span class="caret"></span></button>'
+          + '<ul class="dropdown-menu">'
+            + '<li><a href="javascript: void(0);" class="sgek-botao-entregar">Entregar</a></li>'
+            + '<li role="separator" class="divider"></li>'
+            + '<li><a href="javascript: void(0);" class="sgek-botao-entregar-para-terceiro">Entregar para terceiro</a></li>'
+          + '</ul>'
+        + '</div>'
+      + '</td>');
 
-    //this.$('.dropdown-toggle').dropdown();
+      this.$('.dropdown-toggle').dropdown();
+    }
 
     return this;
+  },
+  entregar: function(event) {
+    event.preventDefault();
+
+    Commons.mostrarCarregando();
+
+    this.model.get("retirada").retirado = true;
+
+    this.model.save({}, {
+      success: _.bind(function() {
+        Commons.mostrarPopup({
+          titulo: "Sucesso",
+          corpo: '<div class="alert alert-success" role="alert">Retirada de kit confirmada com sucesso!</div>',
+          fechar: true
+        });
+
+        this.render();
+      }, this),
+      complete: Commons.esconderCarregando
+    });
   }
 });
