@@ -38,9 +38,18 @@ module.exports = {
     }
   },
   mostrarPopup: function(opcoes) {
-    var modalView = new ModalView(opcoes);
+    if (!this.modalView || (this.modalView && !this.modalView.isAberto())) {
+      this.modalView = new ModalView(opcoes);
 
-    modalView.render();
+      this.modalView.render();
+    }
+  },
+  fecharPopup: function(opcoes) {
+    if (this.modalView) {
+      this.modalView.fechar();
+
+      this.modalView = null;
+    }
   },
   getDescricaoMes: function(mes) {
     switch (mes) {

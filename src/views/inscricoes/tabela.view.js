@@ -49,7 +49,6 @@ module.exports = Backbone.View.extend({
     this.$(".sgek-tabela-mensagem").remove();
 
     this.options.inscricaoCollection.fetch({
-      reset: true,
       data: $.param(filtros)
     });
   },

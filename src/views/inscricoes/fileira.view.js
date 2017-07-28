@@ -1,4 +1,5 @@
 var Commons = require("../../commons.js");
+var FormularioTerceiroView = require("./formulario-terceiro.view.js");
 
 module.exports = Backbone.View.extend({
   tagName: "tr",
@@ -6,9 +7,12 @@ module.exports = Backbone.View.extend({
     this.options = options;
 
     this.listenTo(this.model, "remove", this.remove);
+    this.listenTo(this.model, "change", this.render);
   },
   events: {
-    "click .sgek-botao-entregar": "entregar"
+    "click .sgek-botao-entregar": "entregar",
+    "click .sgek-botao-entregar-para-terceiro": "entregarParaTerceiro",
+    "click .sgek-botao-entregue": "mostrarDetalhesEntrega"
   },
   render: function() {
     this.$el.empty();
@@ -57,9 +61,72 @@ module.exports = Backbone.View.extend({
           fechar: true
         });
 
-        this.render();
+        //this.render();
       }, this),
       complete: Commons.esconderCarregando
+    });
+  },
+  entregarParaTerceiro: function(event) {
+    event.preventDefault();
+
+    var formularioTerceiroView = new FormularioTerceiroView({
+      model: this.model
+    });
+
+    Commons.mostrarPopup({
+      titulo: "Entre com os dados do terceiro",
+      corpo: formularioTerceiroView.render().el,
+      botoes: [
+        {
+          id: "entregarBtn",
+          texto: "Entregar",
+          layout: "primary",
+          icone: "ok",
+          fechar: false,
+          onclick: _.bind(function() {
+            formularioTerceiroView.preencherTerceiro(_.bind(function() {
+              Commons.fecharPopup();
+
+              this.entregar(event);
+            }, this));
+          }, this)
+        }, {
+          id: "cancelarBtn",
+          texto: "Cancelar",
+          layout: "default",
+          icone: "remove",
+          fechar: true
+        }
+      ]
+    });
+  },
+  mostrarDetalhesEntrega: function() {
+    var detalhes = '<table class="table">'
+        + '<thead>'
+          + '<tr><th><span class="glyphicon glyphicon-user"></span> Usuário</th><th><span class="glyphicon glyphicon-time"></span> Data e Hora</th></tr>'
+        + '</thead>'
+        + '<tbody>'
+          + '<tr><td>' + this.model.get("retirada").usuarioInsercao.nome + '</td><td>' + this.model.get("retirada").dataHoraInsercao + '</td></tr>'
+        + '</tbody>'
+      + '</table>';
+
+    if (this.model.get("retirada").terceiro && this.model.get("retirada").terceiro.nome) {
+      detalhes += '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Kit retirado por terceiro</h3></div>'
+        + '<table class="table">'
+          + '<thead>'
+            + '<tr><th>Nome</th><th>Documento</th><th>Telefone</th><th>Endereço</th></tr>'
+          + '</thead>'
+          + '<tbody>'
+            + '<tr><td>' + this.model.get("retirada").terceiro.nome + '</td><td>' + this.model.get("retirada").terceiro.documento + '</td><td>' + this.model.get("retirada").terceiro.telefone + '</td><td>' + this.model.get("retirada").terceiro.endereco + '</td></tr>'
+          + '</tbody>'
+        + '</table>'
+      + '</div>';
+    }
+
+    Commons.mostrarPopup({
+      titulo: "Detalhes da retirada de kit: #" + this.model.get("inscricao"),
+      corpo: detalhes,
+      tamanho: this.model.get("retirada").terceiro && this.model.get("retirada").terceiro.nome ? "modal-lg" : ""
     });
   }
 });

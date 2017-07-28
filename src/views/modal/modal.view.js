@@ -23,7 +23,6 @@ module.exports = Backbone.View.extend({
   render: function() {
     var opcoes = _.extend({
       titulo: "",
-      corpo: "",
       fechar: true,
       tamanho: "", //modal-lg, modal-sm
       botoes: [{
@@ -34,6 +33,8 @@ module.exports = Backbone.View.extend({
     }, this.options);
 
     this.$el.html(template(opcoes));
+
+    this.$(".modal-body").append(opcoes.corpo);
 
     $("body").append(this.el);
 
