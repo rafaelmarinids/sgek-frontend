@@ -44,7 +44,7 @@ module.exports = {
       this.modalView.render();
     }
   },
-  fecharPopup: function(opcoes) {
+  fecharPopup: function() {
     if (this.modalView) {
       this.modalView.fechar();
 

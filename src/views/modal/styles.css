@@ -1,4 +1,4 @@
-.modal-body .alert,
+.modal-body .alert:not(.margin),
 .modal-body .progress {
   margin-bottom: 0 !important;
 }

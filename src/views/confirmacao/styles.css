@@ -1,0 +1,29 @@
+.sgek-confirmacao-dados-pessoais-base {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-position: center center;
+    background-repeat: no-repeat;
+    /*background-size: contain;*/
+    background-size: 100% 100%;
+}
+
+.sgek-confirmacao-dados-pessoais {
+    overflow: hidden;
+    text-align: center;
+}
+
+.sgek-confirmacao-dados-pessoais h1 {
+    font-size: 6rem;
+    margin: 0 0 2rem 0;
+}
+
+/* --------------------------------------------*/
+/* --------->>> BREAKPOINT 768px <<<-----------*/
+/* --------------------------------------------*/
+@media all and (min-width: 48em) {
+    
+}

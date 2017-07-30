@@ -1,5 +1,10 @@
 var Commons = require("../../commons.js");
+var SessaoModel = require("../../models/sessao.model.js");
+var Modal = require("../modal/modal.view.js");
 var FormularioTerceiroView = require("./formulario-terceiro.view.js");
+var templateDadosPessoais = require("./template-dados-pessoais.hbs");
+
+var sessaoModel = new SessaoModel();
 
 module.exports = Backbone.View.extend({
   tagName: "tr",
@@ -49,21 +54,71 @@ module.exports = Backbone.View.extend({
   entregar: function(event) {
     event.preventDefault();
 
+    if (this.options.eventoModel.get("confirmacao")) {
+      // Neste momento a tela de confirmação do inscrito deverá mudar para os dados pessoais.
+      sessaoModel.set("inscricao", this.model);
+
+      var modal = new Modal({
+        titulo: "Confirmação de dados pessoais",
+        corpo: templateDadosPessoais({
+          aviso: true,
+          inscricao: this.model.toJSON()
+        }),
+        fechar: false,
+        botoes: [
+          {
+            id: "entregarBtn",
+            texto: "Confirmar",
+            layout: "primary",
+            icone: "ok",
+            fechar: true,
+            onclick: _.bind(this._entregar, this)
+          }, {
+            id: "cancelarBtn",
+            texto: "Cancelar",
+            layout: "default",
+            icone: "remove",
+            fechar: true,
+            onclick: function() {
+              if (sessaoModel.get("inscricao")) {
+                sessaoModel.set("inscricao", null);
+              }
+            }
+          }
+        ]
+      });
+
+      modal.render();
+    } else {
+      this._entregar();
+    }
+  },
+  _entregar: function() {
     Commons.mostrarCarregando();
 
     this.model.get("retirada").retirado = true;
 
     this.model.save({}, {
-      success: _.bind(function() {
+      success: function() {
         Commons.mostrarPopup({
           titulo: "Sucesso",
-          corpo: '<div class="alert alert-success" role="alert">Retirada de kit confirmada com sucesso!</div>',
-          fechar: true
+          corpo: '<div class="alert alert-success" role="alert">Retirada de kit confirmada com sucesso!</div>'
         });
 
-        //this.render();
-      }, this),
-      complete: Commons.esconderCarregando
+        sessaoModel.set("inscricao", "confirmada");
+
+        setTimeout(function() {
+          if (sessaoModel.get("inscricao") == "confirmada") {
+            sessaoModel.set("inscricao", null);
+          }
+        }, 5000);
+      },
+      error: function() {
+        sessaoModel.set("inscricao", null);
+      },
+      complete: function() {
+        Commons.esconderCarregando();
+      }
     });
   },
   entregarParaTerceiro: function(event) {
@@ -73,7 +128,7 @@ module.exports = Backbone.View.extend({
       model: this.model
     });
 
-    Commons.mostrarPopup({
+    var modal = new Modal({
       titulo: "Entre com os dados do terceiro",
       corpo: formularioTerceiroView.render().el,
       botoes: [
@@ -85,7 +140,7 @@ module.exports = Backbone.View.extend({
           fechar: false,
           onclick: _.bind(function() {
             formularioTerceiroView.preencherTerceiro(_.bind(function() {
-              Commons.fecharPopup();
+              modal.fechar();
 
               this.entregar(event);
             }, this));
@@ -99,6 +154,8 @@ module.exports = Backbone.View.extend({
         }
       ]
     });
+
+    modal.render();
   },
   mostrarDetalhesEntrega: function() {
     var detalhes = '<table class="table">'

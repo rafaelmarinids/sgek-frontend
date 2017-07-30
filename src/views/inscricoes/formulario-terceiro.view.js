@@ -1,26 +1,12 @@
 var Commons = require("../../commons.js");
+var template = require("./template-terceiro.hbs");
 
 module.exports = Backbone.View.extend({
   tagName: "form",
-  template: '<div class="form-group">'
-      + '<label for="nomeInput" class="control-label">Nome</label>'
-      + '<input type="text" class="form-control" id="nomeInput">'
-      + '<span class="help-block"></span>'
-    + '</div>'
-    + '<div class="form-group">'
-      + '<label for="documentoInput" class="control-label">Documento</label> <i>(opcional)</i>'
-      + '<input type="text" class="form-control" id="documentoInput">'
-    + '</div>'
-    + '<div class="form-group">'
-      + '<label for="telefoneInput" class="control-label">Telefone</label> <i>(opcional)</i>'
-      + '<input type="text" class="form-control" id="telefoneInput">'
-    + '</div>'
-    + '<div class="form-group">'
-      + '<label for="enderecoInput" class="control-label">Endereço</label> <i>(opcional)</i>'
-      + '<input type="text" class="form-control" id="enderecoInput">'
-    + '</div>',
   render: function() {
-    this.$el.html(this.template);
+    this.$el.html(template({
+      terceiro: this.model.get("retirada").terceiro
+    }));
 
     return this;
   },

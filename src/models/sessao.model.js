@@ -117,6 +117,9 @@ module.exports = Backbone.Model.extend({
 
 		return this;
 	},
+	listenKeyChange: function(key, callback) {
+		$.jStorage.listenKeyChange(key, callback);
+	},
 	fetch: function(options) {
 		var sessaoModel = this;
 

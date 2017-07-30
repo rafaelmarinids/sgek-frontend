@@ -68,6 +68,7 @@ module.exports = Backbone.View.extend({
   _adicionarInscricao: function(model, collection, options) {
     var fileiraView = new FileiraView({
       model: model,
+      eventoModel: this.options.eventoModel,
       colunaCollection: this.options.colunaCollection
     });
 

@@ -17,6 +17,8 @@ module.exports = Backbone.View.extend({
   initialize: function(options) {
     this.options = options;
 
+    sessaoModel.set("inscricao", null);
+
     if (this.options.id) {
       this.colunaCollection = new ColunaCollection();
       this.inscricaoCollection = new InscricaoCollection();
@@ -56,9 +58,6 @@ module.exports = Backbone.View.extend({
         ]
       });
     }
-  },
-  events: {
-    //"click #avancarBtn": "avancar"
   },
   render: function() {
     this.$el.html(template({
