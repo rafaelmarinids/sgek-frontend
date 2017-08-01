@@ -1,24 +1,22 @@
-{{#if aviso}}
 <div class="alert alert-info alert-dismissible fade in margin" role="alert">
   <p><strong><span class="glyphicon glyphicon-new-window"></span> Tela de confirmação ativa!</strong></p><p>Confirme os dados pessoais juntamente com o inscrito.</p>
 </div>
-{{/if}}
 
-{{#unless aviso}}
-<h1 style="color: {{cor}};">Confirme seus dados pessoais:</h1>
-{{/unless}}
-
-<div class="panel panel-default" style="margin-bottom: 0;">
+<div class="panel panel-default">
   <table class="table">
-    {{#if aviso}}
     <thead>
       <tr><th>#</th><th>Informação</th></tr>
     </thead>
-    {{/if}}
     <tbody>
       {{#each inscricao.colunasFileirasConfirmacao}}
-      <tr><td><strong>{{coluna.valor}}</strong></td><td>{{fileira.valor}}</td></tr>
+      <tr><td class="text-capitalize"><strong>{{coluna.valor}}</strong></td><td>{{fileira.valor}}</td></tr>
       {{/each}}
     </tbody>
   </table>
+</div>
+
+<div class="form-group">
+  <label for="ocorrenciaInput" class="control-label">Registrar ocorrência</label> <i>(opcional)</i>
+  <input type="text" class="form-control" id="ocorrenciaInput" max="450">
+  <span class="help-block"></span>
 </div>

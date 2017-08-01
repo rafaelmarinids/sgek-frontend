@@ -1,0 +1,11 @@
+<h1 style="color: {{cor}};">Confirme seus dados</h1>
+
+<div class="panel panel-default" style="margin-bottom: 0;">
+  <table class="table">
+    <tbody>
+      {{#each inscricao.colunasFileirasConfirmacao}}
+      <tr><td class="text-capitalize"><strong>{{coluna.valor}}</strong></td><td>{{fileira.valor}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

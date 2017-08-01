@@ -44,6 +44,8 @@ module.exports = Backbone.View.extend({
     this.eventoModel.set("cor", this.$("#corInput").val());
     this.eventoModel.set("logomarca", this.$('#logomarcaInput')[0].files.length > 0 ? this.$('#logomarcaInput')[0].files[0] : null);
     this.eventoModel.set("confirmacao", this.$('#confirmacaoRadio label.active input').val() == "true");
+    this.eventoModel.set("mensageminicial", this.$("#mensageminicialInput").val());
+    this.eventoModel.set("mensagemfinal", this.$("#mensagemfinalInput").val());
 
     if (this.eventoModel.get("confirmacao")) {
       this.eventoModel.set("planodefundo", this.$('#planodefundoInput')[0].files.length > 0 ? this.$('#planodefundoInput')[0].files[0] : null);

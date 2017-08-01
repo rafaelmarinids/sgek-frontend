@@ -17,7 +17,6 @@
 
 .sgek-conteudo.sgek-evento-selecionado {
     overflow-x: auto;
-    padding-bottom: 6em;
 }
 
 .sgek-fileira-formulario-pesquisa {
@@ -28,6 +27,25 @@
 .sgek-coluna-botao-entregar {
     min-width: 12em !important;
 }
+
+.pager li {
+    margin-right: .5rem;
+}
+
+.sgek-tabela-inscricoes thead tr th,
+.sgek-tabela-inscricoes tbody tr td {
+  vertical-align: middle;
+}
+
+.sgek-tabela-inscricoes thead tr th:last-child,
+.sgek-tabela-inscricoes tbody tr td:last-child {
+  width: 5rem;
+}
+
+.sgek-paginacao-base .pager {
+    margin: 0;
+}
+
 
 /* --------------------------------------------*/
 /* --------->>> BREAKPOINT 768px <<<-----------*/

@@ -166,22 +166,22 @@ module.exports = Backbone.View.extend({
     }
   },
   _mostrarCarregando: function(porcentagem) {
-    if (!this.modalCarregandoView) {
+    if (!this.modalCarregandoView || !this.modalCarregandoView.isAberto()) {
       this.modalCarregandoView = new ModalCarregandoView({
-        mensagem: porcentagem < 100 ? "Fazendo upload de arquivo(s): " + porcentagem + "%" : "Pronto!",
+        mensagem: porcentagem < 100 ? "Fazendo upload de arquivo(s): " + porcentagem + "%" : "Upload completo, processando dados.",
         porcentagem: porcentagem
       });
 
       this.modalCarregandoView.render();
     } else {
       if (porcentagem >= 99) {
-        this.modalCarregandoView.setMensagem("Pronto!");
+        this.modalCarregandoView.setMensagem("Upload completo, processando dados.");
       } else {
         this.modalCarregandoView.setMensagem("Fazendo upload de arquivo(s): " + porcentagem + "%");
       }
 
       this.modalCarregandoView.setPorcentagem(porcentagem);
-    }    
+    }
   },
   _validar: function(view, attr) {
     var $el = view.$("[name='" + attr + "']");

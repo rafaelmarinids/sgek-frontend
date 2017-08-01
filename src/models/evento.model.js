@@ -18,10 +18,20 @@ module.exports = DefaultModel.extend({
 			if (value && value.size && value.size > 1048576) {
 				return "O tamanho do arquivo de plano de fundo não pode ser superior a 1 Mb.";
 			}
+		},
+		mensageminicial: {
+			required: false,
+			maxLength: 250
+		},
+		mensagemfinal: {
+			required: false,
+			maxLength: 250
 		}
 	},
 	labels: {
-		titulo: "Título"
+		titulo: "Título",
+		mensageminicial: "Mensagem inicial",
+		mensagemfinal: "Mensagem final"
 	},
 	sync: function(method, model, options) {
 		// Post data as FormData object on create to allow file upload

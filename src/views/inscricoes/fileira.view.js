@@ -3,6 +3,7 @@ var SessaoModel = require("../../models/sessao.model.js");
 var Modal = require("../modal/modal.view.js");
 var FormularioTerceiroView = require("./formulario-terceiro.view.js");
 var templateDadosPessoais = require("./template-dados-pessoais.hbs");
+var templateOcorrencia = require("./template-ocorrencia.hbs");
 
 var sessaoModel = new SessaoModel();
 
@@ -10,6 +11,8 @@ module.exports = Backbone.View.extend({
   tagName: "tr",
   initialize: function(options) {
     this.options = options;
+
+    this.ocorrencia = null;
 
     this.listenTo(this.model, "remove", this.remove);
     this.listenTo(this.model, "change", this.render);
@@ -39,9 +42,9 @@ module.exports = Backbone.View.extend({
         + '<div class="btn-group">'
           + '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Disponível <span class="caret"></span></button>'
           + '<ul class="dropdown-menu">'
-            + '<li><a href="javascript: void(0);" class="sgek-botao-entregar">Entregar</a></li>'
+            + '<li><a href="javascript: void(0);" class="sgek-botao-entregar">Retirar</a></li>'
             + '<li role="separator" class="divider"></li>'
-            + '<li><a href="javascript: void(0);" class="sgek-botao-entregar-para-terceiro">Entregar para terceiro</a></li>'
+            + '<li><a href="javascript: void(0);" class="sgek-botao-entregar-para-terceiro">Retirar por terceiro</a></li>'
           + '</ul>'
         + '</div>'
       + '</td>');
@@ -54,14 +57,15 @@ module.exports = Backbone.View.extend({
   entregar: function(event) {
     event.preventDefault();
 
+    var modal;
+
     if (this.options.eventoModel.get("confirmacao")) {
       // Neste momento a tela de confirmação do inscrito deverá mudar para os dados pessoais.
       sessaoModel.set("inscricao", this.model);
 
-      var modal = new Modal({
+      modal = new Modal({
         titulo: "Confirmação de dados pessoais",
         corpo: templateDadosPessoais({
-          aviso: true,
           inscricao: this.model.toJSON()
         }),
         fechar: false,
@@ -72,7 +76,11 @@ module.exports = Backbone.View.extend({
             layout: "primary",
             icone: "ok",
             fechar: true,
-            onclick: _.bind(this._entregar, this)
+            onclick: _.bind(function() {
+              this.ocorrencia = $("#ocorrenciaInput").val()
+
+              this._entregar();
+            }, this)
           }, {
             id: "cancelarBtn",
             texto: "Cancelar",
@@ -87,16 +95,46 @@ module.exports = Backbone.View.extend({
           }
         ]
       });
-
-      modal.render();
     } else {
-      this._entregar();
+      modal = new Modal({
+        titulo: "Registrar ocorrência?",
+        corpo: templateOcorrencia(),
+        fechar: false,
+        botoes: [
+          {
+            id: "entregarBtn",
+            texto: "Confirmar",
+            layout: "primary",
+            icone: "ok",
+            fechar: true,
+            onclick: _.bind(function() {
+              this.ocorrencia = $("#ocorrenciaInput").val()
+
+              this._entregar();
+            }, this)
+          }, {
+            id: "cancelarBtn",
+            texto: "Cancelar",
+            layout: "default",
+            icone: "remove",
+            fechar: true
+          }
+        ]
+      });
     }
+
+    modal.render();
   },
   _entregar: function() {
     Commons.mostrarCarregando();
 
     this.model.get("retirada").retirado = true;
+
+    if (this.ocorrencia) {
+      this.model.get("retirada").ocorrencia = this.ocorrencia;
+
+      this.ocorrencia = null;
+    }
 
     this.model.save({}, {
       success: function() {
@@ -174,9 +212,23 @@ module.exports = Backbone.View.extend({
             + '<tr><th>Nome</th><th>Documento</th><th>Telefone</th><th>Endereço</th></tr>'
           + '</thead>'
           + '<tbody>'
-            + '<tr><td>' + this.model.get("retirada").terceiro.nome + '</td><td>' + this.model.get("retirada").terceiro.documento + '</td><td>' + this.model.get("retirada").terceiro.telefone + '</td><td>' + this.model.get("retirada").terceiro.endereco + '</td></tr>'
+            + '<tr><td>' + this.model.get("retirada").terceiro.nome + '</td><td>' 
+            + (this.model.get("retirada").terceiro.documento ? this.model.get("retirada").terceiro.documento : "-")
+            + '</td><td>' 
+            + (this.model.get("retirada").terceiro.telefone ? this.model.get("retirada").terceiro.telefone : "-")
+            + '</td><td>' 
+            + (this.model.get("retirada").terceiro.endereco ? this.model.get("retirada").terceiro.endereco : "-")
+            + '</td></tr>'
           + '</tbody>'
         + '</table>'
+      + '</div>';
+    }
+
+    if (this.model.get("retirada").ocorrencia) {
+      detalhes += '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Ocorrência</h3></div>'
+        + '<div class="panel-body">'
+          + this.model.get("retirada").ocorrencia
+        + '</div>'
       + '</div>';
     }
 

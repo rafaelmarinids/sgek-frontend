@@ -1,17 +1,18 @@
 var Commons = require("../../commons.js");
 var FileiraView = require("./fileira.view.js");
+var PaginacaoView = require("./paginacao.view.js");
 
 module.exports = Backbone.View.extend({
   tagName: "table",
   attributes: {
-    "class": "table table-hover"
+    "class": "table table-hover sgek-tabela-inscricoes"
   },
   template: '<thead>'
         + '<tr class="sgek-fileira-formulario-pesquisa">'
           + '<th class="sgek-coluna-botao-pesquisar"><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Pesquisar</button></th>'
         + '</tr>'
         + '<tr class="sgek-fileira-cabecalho">'
-          + '<th class="sgek-coluna-entrega-kit">Entrega de Kit</th>'
+          + '<th class="sgek-coluna-entrega-kit">Retirada de Kit</th>'
         + '</tr>'
       + '</thead>'
       + '<tbody></tbody>',
@@ -36,8 +37,18 @@ module.exports = Backbone.View.extend({
 
     Commons.mostrarCarregando();
 
+    this.$(".sgek-tabela-mensagem").remove();
+
+    this.options.inscricaoCollection.fetch({
+      data: $.param(this._filtros()),
+      success: _.bind(function() {
+        this._renderizarPaginacao();
+      }, this)
+    });
+  },
+  _filtros: function() {
     var filtros = {
-      evento: this.options.eventoModel.get("id")
+      evento: this.options.eventoModel.get("id"),
     };
 
     this.$("input[type='text']").each(function() {
@@ -46,11 +57,7 @@ module.exports = Backbone.View.extend({
       }
     });
 
-    this.$(".sgek-tabela-mensagem").remove();
-
-    this.options.inscricaoCollection.fetch({
-      data: $.param(filtros)
-    });
+    return filtros;
   },
   _renderizarCabecalhoTabela: function() {
     this.options.colunaCollection.forEach(_.bind(function(model) {
@@ -64,6 +71,20 @@ module.exports = Backbone.View.extend({
     }, this));
 
     this.$("tbody").html('<tr class="sgek-tabela-mensagem"><td colspan="' + (this.options.colunaCollection.length + 1) + '"><p class="text-info">Realize uma pesquisa para encontrar inscrições.</p></td></tr>');
+  },
+  _renderizarPaginacao: function() {
+    if (this.paginacaoView) {
+      this.paginacaoView.remove();
+    }
+
+    this.paginacaoView = new PaginacaoView({
+      inscricaoCollection: this.options.inscricaoCollection,
+      filtros: _.bind(this._filtros, this)
+    });
+
+    this.paginacaoView.render();
+
+    this.$el.after(this.paginacaoView.el);
   },
   _adicionarInscricao: function(model, collection, options) {
     var fileiraView = new FileiraView({
