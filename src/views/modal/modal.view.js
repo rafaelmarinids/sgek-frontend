@@ -28,7 +28,8 @@ module.exports = Backbone.View.extend({
       botoes: [{
         texto: "Fechar",
         icone: "remove",
-        fechar: true
+        fechar: true,
+        esconder: false
       }]
     }, this.options);
 

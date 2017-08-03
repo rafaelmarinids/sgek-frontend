@@ -1,8 +1,9 @@
 var Commons = require("../../commons.js");
 var SessaoModel = require("../../models/sessao.model.js");
 var Modal = require("../modal/modal.view.js");
+var FormularioConfirmacaoView = require("./formulario-confirmacao.view.js");
 var FormularioTerceiroView = require("./formulario-terceiro.view.js");
-var templateDadosPessoais = require("./template-dados-pessoais.hbs");
+//var templateDadosPessoais = require("./template-dados-pessoais.hbs");
 var templateOcorrencia = require("./template-ocorrencia.hbs");
 
 var sessaoModel = new SessaoModel();
@@ -16,6 +17,7 @@ module.exports = Backbone.View.extend({
 
     this.listenTo(this.model, "remove", this.remove);
     this.listenTo(this.model, "change", this.render);
+    this.listenTo(this.model, "update", this.render);
   },
   events: {
     "click .sgek-botao-entregar": "entregar",
@@ -63,11 +65,13 @@ module.exports = Backbone.View.extend({
       // Neste momento a tela de confirmação do inscrito deverá mudar para os dados pessoais.
       sessaoModel.set("inscricao", this.model);
 
+      var formularioConfirmacaoView = new FormularioConfirmacaoView({
+        model: this.model
+      });
+
       modal = new Modal({
         titulo: "Confirmação de dados pessoais",
-        corpo: templateDadosPessoais({
-          inscricao: this.model.toJSON()
-        }),
+        corpo: formularioConfirmacaoView.render().el,
         fechar: false,
         botoes: [
           {
@@ -77,7 +81,7 @@ module.exports = Backbone.View.extend({
             icone: "ok",
             fechar: true,
             onclick: _.bind(function() {
-              this.ocorrencia = $("#ocorrenciaInput").val()
+              formularioConfirmacaoView.corrigirDadosPessoais();
 
               this._entregar();
             }, this)
@@ -171,6 +175,17 @@ module.exports = Backbone.View.extend({
       corpo: formularioTerceiroView.render().el,
       botoes: [
         {
+          id: "ultimoTerceiroBtn",
+          texto: "Preencher com último",
+          layout: "default",
+          icone: "pencil",
+          fechar: false,
+          esconder: _.isNull(sessaoModel.get("ultimoTerceiro")) || _.isUndefined(sessaoModel.get("ultimoTerceiro")),
+          classes: "pull-left",
+          onclick: function() {
+            formularioTerceiroView.preencherFormulario(sessaoModel.get("ultimoTerceiro"));
+          }
+        }, {
           id: "entregarBtn",
           texto: "Entregar",
           layout: "primary",
@@ -178,6 +193,8 @@ module.exports = Backbone.View.extend({
           fechar: false,
           onclick: _.bind(function() {
             formularioTerceiroView.preencherTerceiro(_.bind(function() {
+              sessaoModel.set("ultimoTerceiro", this.model.get("retirada").terceiro);
+
               modal.fechar();
 
               this.entregar(event);

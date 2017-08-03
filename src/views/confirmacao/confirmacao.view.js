@@ -43,7 +43,9 @@ module.exports = Backbone.View.extend({
     } else {
       this.$(".sgek-confirmacao-dados-pessoais").html('<h1 style="color: ' 
         + (sessaoModel.get("evento").cor ? sessaoModel.get("evento").cor : "#333") 
-        + '">' + (sessaoModel.get("evento").mensageminicial ? sessaoModel.get("evento").mensageminicial : "Seja bem-vindo!") + '</h1><h3>' + sessaoModel.get("evento").titulo + '</h3>');
+        + '">' + (sessaoModel.get("evento").mensageminicial ? sessaoModel.get("evento").mensageminicial : "Seja bem-vindo!") + '</h1><h3 style="color: ' 
+        + (sessaoModel.get("evento").cor ? sessaoModel.get("evento").cor : "#333") 
+        + '">' + sessaoModel.get("evento").titulo + '</h3>');
     }
   }
 });

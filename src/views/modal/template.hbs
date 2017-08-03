@@ -11,7 +11,9 @@
       <div class="modal-footer">
         {{#if botoes.length}}
           {{#each botoes}}
-            <button type="button" class="btn btn-{{#if layout}}{{layout}}{{else}}default{{/if}}" {{#if fechar}}data-dismiss="modal"{{/if}} {{#if id}}id="{{id}}"{{/if}}>{{#if icone}}<span class="glyphicon glyphicon-{{icone}}"></span> {{/if}}{{texto}}</button>
+            {{#unless esconder}}
+              <button type="button" class="btn btn-{{#if layout}}{{layout}}{{else}}default{{/if}}{{#if classes}} {{classes}}{{/if}}" {{#if fechar}}data-dismiss="modal"{{/if}} {{#if id}}id="{{id}}"{{/if}}>{{#if icone}}<span class="glyphicon glyphicon-{{icone}}"></span> {{/if}}{{texto}}</button>
+            {{/unless}}
           {{/each}}
         {{else}}
           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fechar</button>

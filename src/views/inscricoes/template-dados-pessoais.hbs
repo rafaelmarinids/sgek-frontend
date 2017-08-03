@@ -9,7 +9,10 @@
     </thead>
     <tbody>
       {{#each inscricao.colunasFileirasConfirmacao}}
-      <tr><td class="text-capitalize"><strong>{{coluna.valor}}</strong></td><td>{{fileira.valor}}</td></tr>
+      <tr>
+          <td class="text-capitalize"><strong>{{coluna.valor}}</strong></td>
+          <td><input type="text" class="form-control" id="{{fileira.id}}" value="{{fileira.valor}}"></td>
+      </tr>
       {{/each}}
     </tbody>
   </table>

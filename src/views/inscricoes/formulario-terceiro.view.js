@@ -10,6 +10,18 @@ module.exports = Backbone.View.extend({
 
     return this;
   },
+  preencherFormulario: function(terceiro, callback) {
+    if (_.isObject(terceiro)) {
+      this.$("#nomeInput").val(terceiro.nome),
+      this.$("#documentoInput").val(terceiro.documento),
+      this.$("#telefoneInput").val(terceiro.telefone),
+      this.$("#enderecoInput").val(terceiro.endereco)
+
+      if (callback) {
+        callback();
+      }
+    }
+  },
   preencherTerceiro: function(callback) {
     if (this._validar()) {
       this.model.get("retirada").terceiro = {
