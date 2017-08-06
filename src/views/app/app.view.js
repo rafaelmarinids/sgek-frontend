@@ -15,6 +15,7 @@ module.exports = Backbone.View.extend({
   el: ".sgek-app",
   events: {
     "click .sgek-app-mobile-cabecalho a": "abrirFecharMenuMobile",
+    "click .sgek-evento-selecionado-base a": "abrirFecharMenuDesktop",
     "click #sairA": "sair"
   },
   render: function(autenticado) {
@@ -71,6 +72,20 @@ module.exports = Backbone.View.extend({
     });
 
     modal.render();
+  },
+  abrirFecharMenuDesktop: function(event) {
+    event.preventDefault();
+
+    if ((!this.$el.hasClass("menu-fechado") && !this.$el.hasClass("menu-aberto"))
+          || this.$el.hasClass("menu-aberto")) {
+      this.$el.removeClass("menu-aberto").addClass("menu-fechado");
+
+      this.$(".sgek-evento-selecionado-base span").removeClass("glyphicon-chevron-left").addClass("glyphicon-chevron-right");
+    } else {
+      this.$el.removeClass("menu-fechado").addClass("menu-aberto");
+
+      this.$(".sgek-evento-selecionado-base span").removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-left");
+    }
   },
   abrirFecharMenuMobile: function(event) {
     event.preventDefault();

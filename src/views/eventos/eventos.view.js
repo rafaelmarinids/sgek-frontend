@@ -2,8 +2,11 @@ require("bootstrap/dist/css/bootstrap.min.css");
 require("bootstrap/dist/css/bootstrap-theme.min.css");
 require("./styles.css");
 var Commons = require("../../commons.js");
+var SessaoModel = require("../../models/sessao.model.js");
 var EventoCollection = require("../../collections/evento.collection.js");
 var template = require("./template.hbs");
+
+var sessaoModel = new SessaoModel();
 
 module.exports = Backbone.View.extend({
   el: "#conteudoPaginaDiv",
@@ -21,6 +24,7 @@ module.exports = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(template({
+      administrador: sessaoModel.get("tipoUsuario") == "administrador",
       eventos: this.eventoCollection.toJSON()
     }));
 

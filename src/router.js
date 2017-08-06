@@ -134,11 +134,19 @@ module.exports = Backbone.Router.extend({
 	"eventos": function(acao, id) {
 		switch (acao) {
 			case "novo":
-				this.view = new EventosNovoView();
+				if (sessaoModel.get("tipoUsuario") == "administrador") {
+					this.view = new EventosNovoView();
+				} else {
+					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger : true});
+				}
 
 				break;
 			case "editar":
-				this.view = new EventosEditarView({id: id});
+				if (sessaoModel.get("tipoUsuario") == "administrador") {
+					this.view = new EventosEditarView({id: id});
+				} else {
+					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger : true});
+				}
 
 				break;
 			default:

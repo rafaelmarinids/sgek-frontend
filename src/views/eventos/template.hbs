@@ -1,10 +1,12 @@
 <div class="sgek-header"><h1>Eventos</h1></div>
 
 <div class="sgek-conteudo">
+  {{#if administrador}}
   <ul class="nav nav-tabs sgek-nav">
     <li role="presentation" class="active"><a href="javascript: void(0);"><span class="glyphicon glyphicon-th-large"></span> Eventos</a></li>
     <li role="presentation"><a href="#/eventos/novo"><span class="glyphicon glyphicon-plus"></span> Novo evento</a></li>
   </ul>
+  {{/if}}
 
   <table class="table table-striped sgek-table">
     <thead>
@@ -25,8 +27,10 @@
           <td>
             <div class="btn-group" role="group" aria-label="...">
               <a class="btn btn-default" href="#/inscricoes/eventos/{{id}}" role="button" {{{helper-disable-button status}}}><span class="glyphicon glyphicon-hand-right"></span><span class="visible-lg-inline"> Selecionar</span></a>
+              {{#if ../administrador}}
               <a class="btn btn-default" href="#/eventos/editar/{{id}}" role="button"><span class="glyphicon glyphicon-pencil"></span><span class="visible-lg-inline"> Editar</span></a>
               <a class="sgek-excluir btn btn-default" href="javascript: void(0);" data-id="{{id}}" role="button"><span class="glyphicon glyphicon-trash"></span><span class="visible-lg-inline"> Excluir</span></a>
+              {{/if}}
             </div>
           </td>
         </tr>
