@@ -3,7 +3,8 @@ var ModalCarregandoView = require("./views/modal-carregando/modal-carregando.vie
 
 module.exports = {
   // Constantes
-  contextoSistema: "http://sgek",
+  contextoSistema: "http://sgek",/*
+  contextoSistema: "http://sgek-backend.arseventos.com.br",/**/
   //xdebug: "?XDEBUG_SESSION_START=atom-xdebug",/*
   xdebug: "",/**/
 

@@ -143,14 +143,14 @@ module.exports = Backbone.Model.extend({
 		Commons.esconderCarregando();
 
 		if (codigoStatus == 500 || codigoStatus == 405) { // 400 -> BAD REQUEST | 405 -> METHOD NOT ALLOWED
-      if (textoResposta) {
-        console.log(textoResposta);
-      }
+			if (textoResposta) {
+				console.log(textoResposta);
+			}
 
-      Commons.mostrarPopup({
-        titulo: "Erro",
-        corpo: '<div class="alert alert-danger" role="alert">' + textoResposta + '</div>'
-      });
+			Commons.mostrarPopup({
+				titulo: "Erro",
+				corpo: '<div class="alert alert-danger" role="alert">' + textoResposta + '</div>'
+			});
 		} else if (codigoStatus == 401) { // 401 -> UNAUTHORIZED
 			sessaoModel.sair(function() {
 				sessaoModel.set({
@@ -164,34 +164,34 @@ module.exports = Backbone.Model.extend({
 				}
 			});
 		} else if (codigoStatus == 0 || codigoStatus == 404) { // 0 -> ERROR CONNECTION REFUSED
-      Commons.mostrarPopup({
-        titulo: "Erro",
-        corpo: '<div class="alert alert-danger" role="alert">Não foi possível conectar-se ao servidor, verifique sua conexão com a internet e tente novamente em alguns minutos.</div>',
-        fechar: false,
-        botoes: [{
-          id: "okBtn",
-          texto: "Ok",
-          icone: "ok",
-					fechar: true,
-          onclick: _.bind(function() {
-            Commons.mostrarCarregando();
+			Commons.mostrarPopup({
+				titulo: "Erro",
+				corpo: '<div class="alert alert-danger" role="alert">Não foi possível conectar-se ao servidor, verifique sua conexão com a internet e tente novamente em alguns minutos.</div>',
+				fechar: false,
+				botoes: [{
+				id: "okBtn",
+				texto: "Ok",
+				icone: "ok",
+							fechar: true,
+				onclick: _.bind(function() {
+					Commons.mostrarCarregando();
 
-            sessaoModel.sair(function() {
-                sessaoModel.set({
-                  autenticado: false,
-                  redirecionamento: Backbone.history.getFragment()
-                });
+					sessaoModel.sair(function() {
+						sessaoModel.set({
+						autenticado: false,
+						redirecionamento: Backbone.history.getFragment()
+						});
 
-                Backbone.history.navigate("#/identificacao", {trigger : true});
-              });
-          }, this)
-        }]
-      });
+						Backbone.history.navigate("#/identificacao", {trigger : true});
+					});
+				}, this)
+				}]
+			});
 		} else {
-      Commons.mostrarPopup({
-        titulo: "Erro",
-        corpo: '<div class="alert alert-danger" role="alert">Um erro inesperado ocorreu, por favor tente novamente mais tarde.</div>'
-      });
+			Commons.mostrarPopup({
+				titulo: "Erro",
+				corpo: '<div class="alert alert-danger" role="alert">Um erro inesperado ocorreu, por favor tente novamente mais tarde.</div>'
+			});
 		}
 	}
 });

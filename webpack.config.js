@@ -18,8 +18,8 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ] },
-      //{ test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: "style-loader", use: "css-loader" }) },
+      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ] },/*
+      { test: /\.css$/, use: ExtractTextPlugin.extract({ fallback: "style-loader", use: "css-loader" }) },/**/
       { test: /\.(png|svg|jpg|gif)$/, use: [ 'file-loader' ] },
       { test: /\.(woff|woff2|eot|ttf|otf)$/, use: [ 'file-loader' ] },
       { test: /\.html$/, use: [ { loader: 'html-loader', options: { minimize: true } } ] },
@@ -45,10 +45,13 @@ module.exports = {
       names: ['vendor', 'manifest'], // Specify the common bundle's name.
       minChunks: function (module) {
          // this assumes your vendor imports exist in the node_modules directory
-         return module.context && module.context.indexOf('node_modules') !== -1;
+         return module.context && module.context.indexOf('node_modules') !== -1 && module.context.indexOf('src') !== -1;
       }
     }),
-    new ExtractTextPlugin('styles.css'), // Separa o CSS em um arquivo separado*/
+    new ExtractTextPlugin({ // Separa o CSS em um arquivo separado
+      filename: 'styles.css',
+      allChunks: true
+    })*/
   ],
   devtool: 'cheap-eval-source-map',
   devServer: {

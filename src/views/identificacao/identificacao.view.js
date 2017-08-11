@@ -36,7 +36,8 @@ module.exports = Backbone.View.extend({
   		sessaoModel.unset("redirecionamento");
 
   		sessaoModel.autenticar(this.email, this.senha, function() {
-			  Backbone.history.navigate(redirecionamento ? "#/" + redirecionamento : "#/apresentacao", {trigger : true});
+        //Backbone.history.navigate(redirecionamento ? "#/" + redirecionamento : "#/apresentacao", {trigger : true});
+          Backbone.history.navigate("#/apresentacao", {trigger : true});
   		});
     }
   },

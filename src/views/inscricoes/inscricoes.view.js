@@ -27,7 +27,7 @@ module.exports = Backbone.View.extend({
 
       this.eventoModel.fetch({
         success: _.bind(function(model) {
-          sessaoModel.set("evento", this.eventoModel);
+          sessaoModel.set("evento", this.eventoModel.id);
           
           this.colunaCollection.fetch({
             data: $.param({ 
