@@ -29,7 +29,8 @@ module.exports = Backbone.View.extend({
   render: function() {
     this.$el.html(template({
       acao: "Novo",
-      icon: "plus"
+      icon: "plus",
+      evento: this.eventoModel.toJSON()
     }));
 
     Commons.esconderCarregando();

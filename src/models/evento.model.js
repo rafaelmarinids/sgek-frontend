@@ -3,6 +3,10 @@ var DefaultModel = require("./default.model.js");
 
 module.exports = DefaultModel.extend({
 	urlRoot: Commons.contextoSistema + "/rs/eventos",
+	defaults: {
+		"confirmacao": true,
+		"importacaoRealizada": false
+	},
 	validation: {
 		titulo: {
 			required: true

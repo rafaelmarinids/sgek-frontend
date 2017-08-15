@@ -3,9 +3,9 @@
 <div class="sgek-conteudo">
   <p><strong>Instruções:</strong></p>
   <ol>
-    <li>No campo "Tela de inscrição" selecione as colunas que deverão ser consideradas para a busca e confirmação de entrega de kit;</li>
-    <li>No campo "Tela de confirmação" selecione as colunas que deverão ser consideradas para a confirmação de inscrição caso esta esteja configurada;</li>
-    <li>No campo "Número de inscrição" selecione uma coluna que representa unicamente a inscrição (importante para o registro da entrega);</li>
+    <li>No campo "Tela de dados de usuário" selecione as colunas que deverão ser consideradas para a busca e confirmação de entrega de kit;</li>
+    <li>No campo "Tela de confirmação de atleta" selecione as colunas que deverão ser consideradas para a confirmação de inscrição caso esta esteja configurada;</li>
+    <li>No campo "Identificador de inscrição" selecione uma coluna que representa unicamente a inscrição (importante para o registro da entrega);</li>
     <li>Clique no botão "Importar" para concluir o processo.</li>
   </ol>
 
@@ -23,11 +23,11 @@
       <thead>
         <tr>
           <th>Coluna(s)</th>
-          <th>Tela de inscrição</th>
+          <th>Tela de dados de usuário</th>
           {{#if importacao.evento.confirmacao}}
-          <th>Tela de confirmação</th>
+          <th>Tela de confirmação de atleta</th>
           {{/if}}
-          <th>Número de inscrição</th>
+          <th>Identificador de inscrição</th>
         </tr>
       </thead>
       <tbody></tbody>

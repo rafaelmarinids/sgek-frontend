@@ -144,7 +144,19 @@ module.exports = Backbone.View.extend({
       success: function() {
         Commons.mostrarPopup({
           titulo: "Sucesso",
-          corpo: '<div class="alert alert-success" role="alert">Retirada de kit confirmada com sucesso!</div>'
+          corpo: '<div class="alert alert-success" role="alert">Retirada de kit confirmada com sucesso!</div>',
+          botoes: [
+            {
+              id: "fecharBtn",
+              texto: "Fechar",
+              layout: "primary",
+              icone: "ok",
+              fechar: true,
+              onclick: function() {
+                Backbone.history.loadUrl(Backbone.history.fragment);
+              }
+            }
+          ]
         });
 
         sessaoModel.set("inscricao", "confirmada");
@@ -218,7 +230,7 @@ module.exports = Backbone.View.extend({
           + '<tr><th><span class="glyphicon glyphicon-user"></span> Usuário</th><th><span class="glyphicon glyphicon-time"></span> Data e Hora</th></tr>'
         + '</thead>'
         + '<tbody>'
-          + '<tr><td>' + this.model.get("retirada").usuarioInsercao.nome + '</td><td>' + this.model.get("retirada").dataHoraInsercao + '</td></tr>'
+          + '<tr><td>' + this.model.get("retirada").usuarioAlteracao.nome + '</td><td>' + this.model.get("retirada").dataHoraAlteracao + '</td></tr>'
         + '</tbody>'
       + '</table>';
 
@@ -252,7 +264,62 @@ module.exports = Backbone.View.extend({
     Commons.mostrarPopup({
       titulo: "Detalhes da retirada de kit: #" + this.model.get("inscricao"),
       corpo: detalhes,
-      tamanho: this.model.get("retirada").terceiro && this.model.get("retirada").terceiro.nome ? "modal-lg" : ""
+      tamanho: this.model.get("retirada").terceiro && this.model.get("retirada").terceiro.nome ? "modal-lg" : "",
+      botoes: [
+        {
+          id: "cancelarRetiradaBtn",
+          texto: "Cancelar retirada",
+          layout: "default",
+          icone: "repeat",
+          fechar: true,
+          classes: "pull-left",
+          onclick: _.bind(this.cancelarRetirada, this)
+        }, {
+          id: "FecharBtn",
+          texto: "Fechar",
+          layout: "default",
+          icone: "remove",
+          fechar: true
+        }
+      ]
     });
+  },
+  cancelarRetirada: function() {
+    var modal = new Modal({
+      titulo: "Cancelar retirada de kit: #" + this.model.get("inscricao"),
+      corpo: '<div class="alert alert-warning" role="alert">Tem certeza que deseja cancelar a retirada de kit para esta inscrição?</div>',
+      botoes: [
+        {
+          id: "simBtn",
+          texto: "Sim",
+          layout: "primary",
+          icone: "ok",
+          fechar: true,
+          onclick: _.bind(function() {
+            Commons.mostrarCarregando();
+
+            this.model.get("retirada").retirado = false;
+
+            this.model.save({}, {
+              success: function() {
+                Commons.mostrarPopup({
+                  titulo: "Sucesso",
+                  corpo: '<div class="alert alert-success" role="alert">Retira de kit cancelada com sucesso!</div>',
+                });
+              },
+              complete: function() {
+                Commons.esconderCarregando();
+              }
+            });
+          }, this)
+        }, {
+          texto: "Não",
+          icone: "remove",
+          fechar: true
+        }
+      ]
+    });
+
+    modal.render();
   }
 });

@@ -24,6 +24,8 @@ module.exports = Backbone.View.extend({
   },
   preencherTerceiro: function(callback) {
     if (this._validar()) {
+      // Adiciona sempre um novo terceiro, independente se a retirada 
+      // já foi cancelada e exsitia um terceiro anteriormente.
       this.model.get("retirada").terceiro = {
         nome: this.$("#nomeInput").val(),
         documento: this.$("#documentoInput").val(),
@@ -37,13 +39,29 @@ module.exports = Backbone.View.extend({
     }
   },
   _validar: function() {
+    var flag = true;
+
     if (!this.$("#nomeInput").val()) {
       this.$("#nomeInput").parent().addClass("has-error");
       this.$("#nomeInput").parent().find("span.help-block").text("Nome é necessário.").show();
 
-      return false;
+      flag = false;
     }
 
-    return true;
+    if (!this.$("#documentoInput").val()) {
+      this.$("#documentoInput").parent().addClass("has-error");
+      this.$("#documentoInput").parent().find("span.help-block").text("Número do documento é necessário.").show();
+
+      flag = false;
+    }
+
+    if (!this.$("#telefoneInput").val()) {
+      this.$("#telefoneInput").parent().addClass("has-error");
+      this.$("#telefoneInput").parent().find("span.help-block").text("Telefone é necessário.").show();
+
+      flag = false;
+    }
+
+    return flag;
   }
 });
