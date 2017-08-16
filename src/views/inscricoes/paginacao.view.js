@@ -10,7 +10,7 @@ module.exports = Backbone.View.extend({
   initialize: function(options) {
     this.options = options;
 
-    this.listenTo(this.options.inscricaoCollection, "sync", _.bind(this.render, this));
+    this.listenTo(this.options.inscricoesModel, "sync", _.bind(this.render, this));
 
     this.quantidadeRegistros = 25;
     this.pagina = 1;
@@ -30,7 +30,7 @@ module.exports = Backbone.View.extend({
       }
     }
 
-    if (this.options.inscricaoCollection.length < this.quantidadeRegistros) {
+    if (this.options.inscricoesModel.get("inscricoesCollection").length < this.quantidadeRegistros) {
       this.$("#proximo").parent().addClass("disabled");
     } else {
       if (!this.$("#proximo").parent().hasClass("disabled")) {
@@ -38,9 +38,20 @@ module.exports = Backbone.View.extend({
       }
     }
 
-    this.$("#paginaLi").html("<strong>Página " + this.pagina + ":</strong> ");
+    this.$("#paginaLi").html("<strong>Página " + this.pagina + " de " + this._recuperarTotalDePaginas() + ":</strong> ");
+
+    //this.$(".panel-body").append('<span><strong>Total de inscrições:</strong> ' + this.options.inscricoesModel.get("quantidadeTotalInscricoes") + ' | <strong>Kits retirados:</strong> ' + this.options.inscricoesModel.get("quantidadeKitsRetirados") + '</span>');
 
     return this;
+  },
+  _recuperarTotalDePaginas: function() {
+    var total = parseInt(this.options.inscricoesModel.get("quantidadeRegistros")) / this.quantidadeRegistros;
+
+    if (total % 1 !== 0) {
+      return Math.floor(total) + 1;
+    }
+
+    return total > 1 ? total : 1;
   },
   avancar: function(event) {
     event.preventDefault();
@@ -54,7 +65,7 @@ module.exports = Backbone.View.extend({
       pagina: ++this.pagina
     });
 
-    this.options.inscricaoCollection.fetch({
+    this.options.inscricoesModel.fetch({
       data: $.param(filtros),
       complete: function() {
         window.scrollTo(0, 0);
@@ -73,7 +84,7 @@ module.exports = Backbone.View.extend({
       pagina: --this.pagina
     });
 
-    this.options.inscricaoCollection.fetch({
+    this.options.inscricoesModel.fetch({
       data: $.param(filtros),
       complete: function() {
         window.scrollTo(0, 0);

@@ -6,7 +6,7 @@ var Commons = require("../../commons.js");
 var SessaoModel = require("../../models/sessao.model.js");
 var EventoModel = require("../../models/evento.model.js");
 var ColunaCollection = require("../../collections/coluna.collection.js");
-var InscricaoCollection = require("../../collections/inscricao.collection.js");
+var InscricoesModel = require("../../models/inscricoes.model.js");
 var TabelaView = require("./tabela.view.js");
 var template = require("./template.hbs");
 
@@ -21,21 +21,43 @@ module.exports = Backbone.View.extend({
 
     if (this.options.id) {
       this.colunaCollection = new ColunaCollection();
-      this.inscricaoCollection = new InscricaoCollection();
+      this.inscricoesModel = new InscricoesModel();
+
+      this.inscricoesModel.get("inscricoesCollection").reset(null);
 
       this.eventoModel = new EventoModel({id: this.options.id});
 
       this.eventoModel.fetch({
         success: _.bind(function(model) {
-          sessaoModel.set("evento", this.eventoModel.id);
+          if (this.eventoModel.get("status") != "Dados não importados" && this.eventoModel.get("status") != "Inativo") {
+            sessaoModel.set("evento", this.eventoModel.id);
           
-          this.colunaCollection.fetch({
-            data: $.param({ 
-              evento: model.get("id"),
-              usarnabusca: true
-            }),
-            success: _.bind(this.render, this)
-          });
+            this.colunaCollection.fetch({
+              data: $.param({ 
+                evento: model.get("id"),
+                usarnabusca: true
+              }),
+              success: _.bind(this.render, this)
+            });
+          } else {
+            Commons.mostrarPopup({
+              titulo: "Aviso",
+              corpo: '<div class="alert alert-warning" role="alert">O evento informado está atualmente inativo ou sem importação, portanto é impossível consultar as inscrições!</div>',
+              fechar: false,
+              botoes: [
+                {
+                  id: "fecharBtn",
+                  texto: "Fechar",
+                  layout: "primary",
+                  icone: "remove",
+                  fechar: true,
+                  onclick: function() {
+                    Backbone.history.navigate("#/eventos", {trigger : true});
+                  }
+                }
+              ]
+            });
+          }
         }, this)
       });
     } else {
@@ -68,7 +90,7 @@ module.exports = Backbone.View.extend({
     this.tabelaView = new TabelaView({
       eventoModel: this.eventoModel,
       colunaCollection: this.colunaCollection,
-      inscricaoCollection: this.inscricaoCollection
+      inscricoesModel: this.inscricoesModel
     });
 
     this.$("form").html(this.tabelaView.render().el);

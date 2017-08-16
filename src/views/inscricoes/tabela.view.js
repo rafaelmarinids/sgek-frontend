@@ -20,8 +20,8 @@ module.exports = Backbone.View.extend({
   initialize: function(options) {
     this.options = options;
 
-    this.listenTo(this.options.inscricaoCollection, "add", this._adicionarInscricao);
-    this.listenTo(this.options.inscricaoCollection, "sync", this._atualizarTabela);
+    this.listenTo(this.options.inscricoesModel.get("inscricoesCollection"), "add", this._adicionarInscricao);
+    this.listenTo(this.options.inscricoesModel, "sync", this._atualizarTabela);
   },
   events: {
     "click thead tr th button": "pesquisar"
@@ -40,7 +40,7 @@ module.exports = Backbone.View.extend({
 
     this.$(".sgek-tabela-mensagem").remove();
 
-    this.options.inscricaoCollection.fetch({
+    this.options.inscricoesModel.fetch({
       data: $.param(this._filtros()),
       success: _.bind(function() {
         this._renderizarPaginacao();
@@ -73,9 +73,9 @@ module.exports = Backbone.View.extend({
       // Aplica as máscaras caso necessário.
       if (model.get("valor").toUpperCase().indexOf("DATA ") !== -1 || model.get("valor").toUpperCase().indexOf("NASCIMENTO") !== -1) {
         Inputmask("99/99/9999").mask(this.$('input[name="' + model.get("indice") + '"]'));
-      } else if (model.get("valor").toUpperCase().indexOf("CPF") !== -1) {
+      } /*else if (model.get("valor").toUpperCase().indexOf("CPF") !== -1) {
         Inputmask("999.999.999-99").mask(this.$('input[name="' + model.get("indice") + '"]'));
-      }
+      }*/
     }, this));
 
     this.$("tbody").html('<tr class="sgek-tabela-mensagem"><td colspan="' + (this.options.colunaCollection.length + 1) + '"><p class="text-info">Realize uma pesquisa para encontrar inscrições.</p></td></tr>');
@@ -86,13 +86,11 @@ module.exports = Backbone.View.extend({
     }
 
     this.paginacaoView = new PaginacaoView({
-      inscricaoCollection: this.options.inscricaoCollection,
+      inscricoesModel: this.options.inscricoesModel,
       filtros: _.bind(this._filtros, this)
     });
 
-    this.paginacaoView.render();
-
-    this.$el.after(this.paginacaoView.el);
+    this.$el.after(this.paginacaoView.render().el);
   },
   _adicionarInscricao: function(model, collection, options) {
     var fileiraView = new FileiraView({
@@ -103,8 +101,8 @@ module.exports = Backbone.View.extend({
 
     this.$("tbody").append(fileiraView.render().el);
   },
-  _atualizarTabela: function(collection, response, options) {
-    if (collection.length == 0) {
+  _atualizarTabela: function(model, response, options) {
+    if (model.get("inscricoesCollection").length == 0) {
       this.$("tbody").html('<tr class="sgek-tabela-mensagem"><td colspan="' + (this.options.colunaCollection.length + 1) + '"><p class="text-info">Nenhuma inscrição encontrada, pesquise novamente.</p></td></tr>');
     }
 

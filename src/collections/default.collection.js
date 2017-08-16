@@ -27,8 +27,8 @@ module.exports = Backbone.Collection.extend({
 
 						Commons.mostrarPopup({
 							titulo: "Erro",
-						corpo: '<div class="alert alert-danger" role="alert">' + response.responseText + '</div>'
-					});
+							corpo: '<div class="alert alert-danger" role="alert">' + response.responseText + '</div>'
+						});
 					} else if (response.status == 401) { // 401 -> UNAUTHORIZED
 						var urlRedirecionamento = "#/identificacao";
 
