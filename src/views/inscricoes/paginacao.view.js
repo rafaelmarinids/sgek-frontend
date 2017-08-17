@@ -6,7 +6,7 @@ module.exports = Backbone.View.extend({
   attributes: {
     "class": "panel panel-default sgek-paginacao-base"
   },
-  template: '<div class="panel-body"><nav><ul class="pager"><li id="paginaLi"><strong>Página 1:</strong> </li><li><a href="javascript: void(0);" id="anterior">Anterior</a></li><li><a href="javascript: void(0);" id="proximo">Próximo</a></li></ul></nav></div>',
+  template: '<div class="panel-body"><nav><ul class="pager"><li id="paginaLi"></li><li><a href="javascript: void(0);" id="anterior">Anterior</a></li><li><a href="javascript: void(0);" id="proximo">Próximo</a></li><li id="infoLi"></li></ul></nav></div>',
   initialize: function(options) {
     this.options = options;
 
@@ -40,7 +40,7 @@ module.exports = Backbone.View.extend({
 
     this.$("#paginaLi").html("<strong>Página " + this.pagina + " de " + this._recuperarTotalDePaginas() + ":</strong> ");
 
-    //this.$(".panel-body").append('<span><strong>Total de inscrições:</strong> ' + this.options.inscricoesModel.get("quantidadeTotalInscricoes") + ' | <strong>Kits retirados:</strong> ' + this.options.inscricoesModel.get("quantidadeKitsRetirados") + '</span>');
+    this.$("#infoLi").append('<span>Total de inscrições: <strong>' + this.options.inscricoesModel.get("quantidadeTotalInscricoes") + '</strong> | Kits retirados: <strong>' + this.options.inscricoesModel.get("quantidadeKitsRetirados") + '</strong></span>');
 
     return this;
   },

@@ -5,6 +5,9 @@ var AppView = require("./views/app/app.view.js");
 var IdentificacaoView = require("./views/identificacao/identificacao.view.js");
 var EsqueciMinhaSenhaView = require("./views/esqueci-minha-senha/esqueci-minha-senha.view.js");
 var ApresentacaoView = require("./views/apresentacao/apresentacao.view.js");
+var UsuariosView = require("./views/usuarios/usuarios.view.js");
+var UsuariosNovoView = require("./views/usuarios/novo.view.js");
+var UsuariosEditarView = require("./views/usuarios/editar.view.js");
 var EventosView = require("./views/eventos/eventos.view.js");
 var EventosNovoView = require("./views/eventos/novo.view.js");
 var EventosEditarView = require("./views/eventos/editar.view.js");
@@ -23,7 +26,7 @@ module.exports = Backbone.Router.extend({
 			labelFormatter: "label"
 		});
 	},
-	requerAutenticacao: ["apresentacao", "eventos", "importar", "inscricoes", "confirmacao-dados-pessoais"],
+	requerAutenticacao: ["apresentacao", "usuarios", "eventos", "importar", "inscricoes", "confirmacao-dados-pessoais"],
 	previneAcessoQuandoAutenticado: ["identificacao", "esqueci-minha-senha"],
 	execute: function(callback, args, name) {
 		/*
@@ -112,6 +115,7 @@ module.exports = Backbone.Router.extend({
 	"identificacao": "identificacao",
 	"esqueci-minha-senha": "esqueci-minha-senha",
 	"apresentacao": "apresentacao",
+	"usuarios(/:acao)(/:id)": "usuarios",
 	"eventos(/:acao)(/:id)": "eventos",
 	"importar(/eventos/:id)": "importar",
 	"inscricoes/eventos/:id": "inscricoes",
@@ -131,13 +135,37 @@ module.exports = Backbone.Router.extend({
 	"apresentacao": function() {
 		this.view = new ApresentacaoView();
 	},
+	"usuarios": function(acao, id) {
+		switch (acao) {
+			case "novo":
+				if (sessaoModel.get("tipoUsuario") == "administrador") {
+					this.view = new UsuariosNovoView();
+				} else {
+					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger: true});
+				}
+
+				break;
+			case "editar":
+				if (sessaoModel.get("tipoUsuario") == "administrador") {
+					this.view = new UsuariosEditarView({id: id});
+				} else {
+					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger: true});
+				}
+
+				break;
+			default:
+				this.view = new UsuariosView();
+
+				break;
+		}
+	},
 	"eventos": function(acao, id) {
 		switch (acao) {
 			case "novo":
 				if (sessaoModel.get("tipoUsuario") == "administrador") {
 					this.view = new EventosNovoView();
 				} else {
-					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger : true});
+					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger: true});
 				}
 
 				break;
@@ -145,7 +173,7 @@ module.exports = Backbone.Router.extend({
 				if (sessaoModel.get("tipoUsuario") == "administrador") {
 					this.view = new EventosEditarView({id: id});
 				} else {
-					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger : true});
+					Backbone.history.navigate("#/pagina-nao-encontrada", {trigger: true});
 				}
 
 				break;

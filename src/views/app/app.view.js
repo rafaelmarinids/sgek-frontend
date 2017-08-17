@@ -32,6 +32,7 @@ module.exports = Backbone.View.extend({
         var agora = new Date();
 
         this.$el.html(templateApp({
+          administrador: sessaoModel.get("tipoUsuario") == "administrador",
           imagemLogo: imagemLogo,
           imagemUsuario: imagemUsuario,
           nomeUsuario: sessaoModel.getNomeUsuario(),

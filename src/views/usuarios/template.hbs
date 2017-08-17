@@ -1,0 +1,50 @@
+<div class="sgek-header"><h1>Usuários</h1></div>
+
+<div class="sgek-conteudo">
+  {{#if administrador}}
+  <ul class="nav nav-tabs sgek-nav">
+    <li role="presentation" class="active"><a href="javascript: void(0);"><span class="glyphicon glyphicon-th-large"></span> Lista de usuários</a></li>
+    <li role="presentation"><a href="#/usuarios/novo"><span class="glyphicon glyphicon-plus"></span> Novo usuário</a></li>
+  </ul>
+  {{/if}}
+
+  <table class="table table-striped sgek-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Tipo</th>
+        <th>Data de cadastro</th>
+        {{#if administrador}}
+        <th>Opções</th>
+        {{/if}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#if eventos}}
+        {{#each eventos}}
+        <tr>
+          <td>{{id}}</td>
+          <td>{{nome}}</td>
+          <td>{{email}}</td>
+          <td>{{tipo}}</td>
+          <td>{{dataHora}}</td>
+          {{#if ../administrador}}
+          <td>
+            <div class="btn-group" role="group" aria-label="...">
+              <a class="btn btn-default" href="#/usuarios/editar/{{id}}" role="button"><span class="glyphicon glyphicon-pencil"></span><span class="visible-lg-inline"> Editar</span></a>
+              <a class="sgek-excluir btn btn-default" href="javascript: void(0);" data-id="{{id}}" role="button"><span class="glyphicon glyphicon-trash"></span><span class="visible-lg-inline"> Excluir</span></a>
+            </div>
+          </td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      {{else}}
+        <tr>
+          <td colspan="4">Nenhum usuário cadastrado.</td>
+        </tr>
+      {{/if}}
+    </tbody>
+  </table>
+</div>
