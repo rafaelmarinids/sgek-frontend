@@ -4,6 +4,7 @@ require("./styles.css");
 require("backbone-validation");
 var Commons = require("../../commons.js");
 var UsuarioModel = require("../../models/usuario.model.js");
+var EventoCollection = require("../../collections/evento.collection.js");
 var template = require("./template-usuario.hbs");
 
 module.exports = Backbone.View.extend({
@@ -19,9 +20,17 @@ module.exports = Backbone.View.extend({
       invalid: this._invalidar
     });
 
+    this.eventoCollection = new EventoCollection();
+
+    Commons.mostrarCarregando();
+
     this.usuarioModel.fetch({
-      success: _.bind(this.render, this)
-    });
+      success: _.bind(function() {
+        this.eventoCollection.fetch({
+          success: _.bind(this.render, this)
+        });
+      }, this)
+    });    
   },
   events: {
     "click #salvarBtn": "cadastrar"
@@ -30,7 +39,11 @@ module.exports = Backbone.View.extend({
     this.$el.html(template({
       acao: "Editar",
       icon: "plus",
-      usuario: this.usuarioModel.toJSON()
+      usuario: this.usuarioModel.toJSON(),
+      opcoesEventos: {
+        eventos: this.eventoCollection.toJSON(),
+        eventosSelecionados: this.usuarioModel.get("eventos")
+      }
     }));
 
     Commons.esconderCarregando();
@@ -44,6 +57,14 @@ module.exports = Backbone.View.extend({
     this.usuarioModel.set("email", this.$("#emailInput").val());
     this.usuarioModel.set("senha", this.$("#senhaInput").val());
     this.usuarioModel.set("tipo", this.$('#tipoRadio label.active input').val());
+    
+    var eventos = [];
+    
+    $.each(this.$("input[name='eventos[]']:checked"), function() {
+      eventos.push($(this).val());
+    });
+
+    this.usuarioModel.set("eventos", eventos);
 
     if (this.usuarioModel.isValid(true)) {
       Commons.mostrarCarregando();
