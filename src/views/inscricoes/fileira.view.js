@@ -79,11 +79,13 @@ module.exports = Backbone.View.extend({
             texto: "Confirmar",
             layout: "primary",
             icone: "ok",
-            fechar: true,
+            fechar: false,
             onclick: _.bind(function() {
-              formularioConfirmacaoView.corrigirDadosPessoais();
+              formularioConfirmacaoView.corrigirDadosPessoais(_.bind(function() {
+                modal.fechar();
 
-              this._entregar();
+                this._entregar();
+              }, this));
             }, this)
           }, {
             id: "cancelarBtn",

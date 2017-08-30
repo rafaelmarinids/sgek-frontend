@@ -73,9 +73,9 @@ module.exports = Backbone.View.extend({
       // Aplica as máscaras caso necessário.
       if (model.get("valor").toUpperCase().indexOf("DATA ") !== -1 || model.get("valor").toUpperCase().indexOf("NASCIMENTO") !== -1) {
         Inputmask("99/99/9999").mask(this.$('input[name="' + model.get("indice") + '"]'));
-      } /*else if (model.get("valor").toUpperCase().indexOf("CPF") !== -1) {
+      } else if (model.get("valor").toUpperCase().indexOf("CPF") !== -1) {
         Inputmask("999.999.999-99").mask(this.$('input[name="' + model.get("indice") + '"]'));
-      }*/
+      }
     }, this));
 
     this.$("tbody").html('<tr class="sgek-tabela-mensagem"><td colspan="' + (this.options.colunaCollection.length + 1) + '"><p class="text-info">Realize uma pesquisa para encontrar inscrições.</p></td></tr>');

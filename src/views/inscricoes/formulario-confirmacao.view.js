@@ -11,6 +11,8 @@ module.exports = Backbone.View.extend({
   },
   initialize: function() {
     //this.modelClone = _.clone(this.model);
+
+    this.atualizadoDadosPessoais = false;
   },
   render: function() {
     this.$el.html(template({
@@ -20,22 +22,36 @@ module.exports = Backbone.View.extend({
     return this;
   },
   corrigirDadosPessoais: function(callback) {
-    this.model.get("retirada").ocorrencia = this.$("#ocorrenciaInput").val();
-
-    /*_.each(this.model.get("colunasFileirasBusca"), _.bind(function(colunaFileira) {
-      colunaFileira.fileira.valor = this.$(colunaFileira.fileira.id).val();
-    }, this));
-
-    _.each(this.model.get("colunasFileirasConfirmacao"), _.bind(function(colunaFileira) {
-      colunaFileira.fileira.valor = this.$(colunaFileira.fileira.id).val();
-    }, this));*/
-
-    if (callback) {
-      callback();
+    if (this._validar()) {
+      this.model.get("retirada").ocorrencia = this.$("#ocorrenciaInput").val();
+      
+      /*_.each(this.model.get("colunasFileirasBusca"), _.bind(function(colunaFileira) {
+        colunaFileira.fileira.valor = this.$(colunaFileira.fileira.id).val();
+      }, this));
+  
+      _.each(this.model.get("colunasFileirasConfirmacao"), _.bind(function(colunaFileira) {
+        colunaFileira.fileira.valor = this.$(colunaFileira.fileira.id).val();
+      }, this));*/
+  
+      if (callback) {
+        callback();
+      }
     }
+  },
+  _validar: function() {
+    if (this.atualizadoDadosPessoais && _.isEmpty(this.$("#ocorrenciaInput").val())) {
+      this.$("#ocorrenciaInput").parent().addClass("has-error");
+      this.$("#ocorrenciaInput").parent().find("span.help-block").text("Alteração de dados detectada, é obrigatório uma descrição.").show();
+
+      return false;
+    }
+
+    return true;
   },
   _atualizarDadoPessoal: function(event) {
     Commons.delay(_.bind(function() {
+      this.atualizadoDadosPessoais = true;
+
       var idFileira = this.$(event.target).attr("id");
     
       var colunaFileiraBuscaAtualizada = _.find(this.model.get("colunasFileirasBusca"), _.bind(function(colunaFileira) {
