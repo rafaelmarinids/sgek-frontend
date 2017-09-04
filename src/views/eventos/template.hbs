@@ -24,7 +24,12 @@
         <tr>
           <td>{{id}}</td>
           <td>{{titulo}}</td>
+          {{#if ../administrador}}
           <td>{{{helper-status .}}}</td>
+          {{/if}}
+          {{#unless ../administrador}}
+          <td>{{{helper-status-sem-link .}}}</td>
+          {{/unless}}
           <td>{{datahora}}</td>
           <td>
             <div class="btn-group" role="group" aria-label="...">
