@@ -240,7 +240,7 @@ module.exports = Backbone.View.extend({
       detalhes += '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Kit retirado por terceiro</h3></div>'
         + '<table class="table">'
           + '<thead>'
-            + '<tr><th>Nome</th><th>Documento</th><th>Telefone</th><th>Endereço</th></tr>'
+            + '<tr><th>Nome</th><th>Documento</th><th>Telefone</th><th>Observação</th></tr>'
           + '</thead>'
           + '<tbody>'
             + '<tr><td>' + this.model.get("retirada").terceiro.nome + '</td><td>' 
